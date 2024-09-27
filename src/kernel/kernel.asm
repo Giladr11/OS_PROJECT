@@ -24,4 +24,3 @@ print:
 kernel_success db "Kernel is Running!!", 0  ; Null-terminated string
 
 times (512 - ($ - $$)) db 0  ; Fill remaining space with zeros
-dw 0xAA55                   ; Boot sector signature
