@@ -3,6 +3,7 @@ BUILD_DIR = build
 SRC_DIR = src
 BOOT_DIR = boot
 KERNEL_DIR = kernel
+INCLUDE_DIR = include
 
 # Compilers
 # Boot
@@ -15,6 +16,8 @@ CXX_FLAGS = -m32 -ffreestanding -c
 # SRC Files
 # Boot Source File
 BOOT_SOURCE = boot.asm
+GDT_SOURCE = $(SRC_DIR)/$(BOOT_DIR)/$(INCLUDE_DIR)/GDT.asm
+INITPM_SOURCE = $(SRC_DIR)/$(BOOT_DIR)/$(INCLUDE_DIR)/INITPM.asm
 # Kernel Source Files
 KERNEL_SRC = kernel.asm
 
@@ -56,7 +59,7 @@ $(BUILD_DIR)/$(DISK_IMG): $(BUILD_DIR)/$(KERNEL_DIR)/$(KERNEL_BIN) $(BUILD_DIR)/
 	dd if=$(BUILD_DIR)/$(KERNEL_DIR)/$(KERNEL_BIN) of=$(BUILD_DIR)/$(DISK_IMG) bs=$(KERNEL_SIZE) count=$(COUNT) seek=$(SEEK) conv=$(CONV)
 
 # Compile to boot.bin
-$(BUILD_DIR)/$(BOOT_DIR)/$(BOOT_BIN): $(SRC_DIR)/$(BOOT_DIR)/$(BOOT_SOURCE)
+$(BUILD_DIR)/$(BOOT_DIR)/$(BOOT_BIN): $(SRC_DIR)/$(BOOT_DIR)/$(BOOT_SOURCE) $(INITPM_SOURCE) $(GDT_SOURCE)
 	@echo "Building $(BUILD_DIR)/$(BOOT_DIR)/$(BOOT_BIN)..."
 	$(NASM_CMD) $(NASM_FLAGS) $(SRC_DIR)/$(BOOT_DIR)/$(BOOT_SOURCE) -o $(BUILD_DIR)/$(BOOT_DIR)/$(BOOT_BIN)
 
