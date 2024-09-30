@@ -3,16 +3,17 @@
 
 ;%include "src/boot/stage2/GDT.asm"
 
-KERNEL_LOAD_SEG equ 0x2000
+KERNEL_LOAD_SEG equ 0x1000
 KERNEL_ENTRY_OFFSET equ 0x0000
 
 _start:
-    mov ax, 0x8C00               ; Set data segment to 0x7D00 where the kernel is loaded
-    mov ds, ax                   ; Initialize DS to point to stage2
+    mov ax, 0x8C00               ; Set segments to 0x8C00 where the stage2 is loaded
+    mov ds, ax                   
     mov es, ax
     mov ss, ax
-    mov bp, 0x8CF0
-    mov sp, bp                  ; Set stack pointer to the top of the bootloader
+    mov bp, 0x8C00
+    mov sp, 0x8D00               
+
     call load_kernel
     call ENTER_PM
     jmp KERNEL_LOAD_SEG:KERNEL_ENTRY_OFFSET
@@ -68,23 +69,22 @@ PM_START:
 
 disk_error:
     mov si, disk_error_message
-    call print16             
+    call print             
     hlt                          
 
 PM_ERROR:
     mov si, pm_error_message
-    call print16
+    call print
     hlt
 
-;Print 16 BITS
-print16:
+print:
     mov ah, 0x0E
-.printchar16:
+.printchar:
     lodsb
     cmp al, 0
     je .done
     int 0x10
-    jmp .printchar16
+    jmp .printchar
 .done:
     ret
 

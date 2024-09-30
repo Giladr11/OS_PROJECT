@@ -5,12 +5,12 @@ STAGE2_LOAD_SEG equ 0x8C00
 STAGE2_ENTRY_OFFSET equ 0x0000
 
 _start:
-    mov ax, 0x7C00
+    mov ax, 0x7C00              ; Set segments to 0x7C00 where the stage1 is loaded
     mov ds, ax
     mov es, ax
     mov ss, ax
-    mov bp, 0x7CF0
-    mov sp, bp                  ; Set stack pointer to the top of the bootloader
+    mov bp, 0x7C00
+    mov sp, 0x7D00                  
 
     call load_stage2
     jmp STAGE2_LOAD_SEG:STAGE2_ENTRY_OFFSET
