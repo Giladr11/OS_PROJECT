@@ -70,6 +70,12 @@ GDT_DESC:
     dw GDT_END - GDT_START - 1 ; Size of GDT -1
     dd GDT_START 
 
+[BITS 32]
+INITA20:
+    in al, 0x92                 ; Read the A20 line state
+    or al, 2                    ; Set A20 line bit
+    out 0x92, al                ; Write back to port 0x92
+    ret
 
 ;Set up segments for protected mode
 [BITS 32]     
@@ -82,10 +88,8 @@ PModeMain:
     mov gs, ax                  ; Set GS to data segment
     mov ebp, 0x9C00
     mov esp, ebp
-    
-    in al, 0x92                 ; Read the A20 line state
-    or al, 2                    ; Set A20 line bit
-    out 0x92, al                ; Write back to port 0x92
+
+    call CODE_SEG:INITA20
     
     jmp CODE_SEG:KERNEL_START_ADDR
 
