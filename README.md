@@ -1,5 +1,6 @@
 # OS_PROJECT
 Implementing a 2 stages bootloader:
+
 Stage1:
 * Setting up segments
 * Loading stage2
