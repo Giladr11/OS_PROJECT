@@ -114,7 +114,7 @@ print:
     ret
 
 load_kernel_message db "Loading Kernel to RAM..."    , 0x0D, 0x0A, 0
-switch_pm_message db "Initializing Protected Mode.."   , 0x0D, 0x0A, 0
+switch_pm_message db "Initializing Protected Mode.." , 0x0D, 0x0A, 0
 disk_error_message db "Error Reading Disk..."        , 0x0D, 0x0A, 0
 
 times 512-($-$$) db 0

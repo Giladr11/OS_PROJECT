@@ -51,9 +51,9 @@ print:
 .done:
     ret
 
-boot_message db "Starting Booting Process..."         , 0x0D, 0x0A, 0
-stage2_message db "Switching to Stage2..."      , 0x0D, 0x0A, 0 
-disk_error_message db "Error Reading Disk..."          , 0x0D, 0x0A, 0
+boot_message db "Starting Booting Process..."  , 0x0D, 0x0A, 0
+stage2_message db "Switching to Stage2..."     , 0x0D, 0x0A, 0 
+disk_error_message db "Error Reading Disk..."  , 0x0D, 0x0A, 0
 
 times 510-($-$$) db 0
 dw 0xAA55
