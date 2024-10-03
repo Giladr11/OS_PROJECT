@@ -9,7 +9,7 @@ Stage1:
 Stage2:
 * Setting up segments
 * Loading Kernel to RAM
-* Conducting CHECKSUM for Kernel
+* Conducting CHECKSUM on the Kernel
 * Setting up GDT
 * Switching to PM
 * Transferring Control to Kernel
