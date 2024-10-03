@@ -57,15 +57,16 @@ CLEAN_BUILD3 = *.o
 all: $(DISK_IMG)
 
 # Compile disk image
-$(DISK_IMG): $(BOOT_BIN)  $(KERNEL_BIN)
+$(DISK_IMG): $(BOOT_BIN) $(LOADER_BIN) $(KERNEL_BIN)
 	@echo "Building $(DISK_IMG)..."
 	dd if=$(BOOT_BIN) of=$(DISK_IMG) bs=$(SECTOR_SIZE) count=$(COUNT) conv=$(CONV)
 
-	
+	$(eval LOADER_SIZE := $(shell stat -c%s $(LOADER_BIN)))
+	dd if=$(LOADER_BIN) of=$(DISK_IMG) bs=$(LOADER_SIZE) count=$(COUNT) seek=$(STAGE2_SEEK) conv=$(CONV)
 
-	$(eval KERNEL_SEEK := $(shell echo $$(((`stat -c%s $(BOOT_BIN)` + $(SECTOR_SIZE) - 1) / $(SECTOR_SIZE) + 1))))
+	$(eval KERNEL_SEEK := $(shell echo $$(((`stat -c%s $(LOADER_BIN)` + $(SECTOR_SIZE) - 1) / $(SECTOR_SIZE) + 1))))
 	$(eval KERNEL_SIZE := $(shell stat -c%s $(KERNEL_BIN)))
-	dd if=$(KERNEL_BIN) of=$(DISK_IMG) bs=$(KERNEL_SIZE) count=$(COUNT) seek=1 conv=$(CONV)
+	dd if=$(KERNEL_BIN) of=$(DISK_IMG) bs=$(KERNEL_SIZE) count=$(COUNT) seek=$(KERNEL_SEEK) conv=$(CONV)
 
 # Compile stage1
 $(BOOT_BIN): $(BOOT_SRC)
@@ -73,9 +74,9 @@ $(BOOT_BIN): $(BOOT_SRC)
 	$(NASM_CMD) $(NASM_FLAGS) $(BOOT_SRC) -o $(BOOT_BIN)
 
 # Compile stage2
-# $(LOADER_BIN): $(LOADER_SRC)
-# 	@echo "Compiling $(LOADER_BIN)..."
-# 	$(NASM_CMD) $(NASM_FLAGS) $(LOADER_SRC) -o $(LOADER_BIN)
+$(LOADER_BIN): $(LOADER_SRC)
+	@echo "Compiling $(LOADER_BIN)..."
+	$(NASM_CMD) $(NASM_FLAGS) $(LOADER_SRC) -o $(LOADER_BIN)
 
 # Compiling Final kernel.bin
 $(KERNEL_BIN): $(SCRIPT_LINKER) $(LINKED_KERNEL_OBJ)
