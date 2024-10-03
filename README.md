@@ -3,12 +3,13 @@ Implementing a 2 stages bootloader:
 
 Stage1:
 * Setting up segments
-* Loading stage2
+* Loading Stage2
+* Transferring Control to Stage2
 
 Stage2:
 * Setting up segments
-* Loading kernel to RAM
-* Conducting CHECKSUM for kernel
+* Loading Kernel to RAM
+* Conducting CHECKSUM for Kernel
 * Setting up GDT
 * Switching to PM
-* Transfering Access to Kernel
+* Transferring Control to Kernel
