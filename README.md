@@ -1,4 +1,4 @@
-# OS PROJECT
+# OS_PROJECT
 Implementing a 2 stages bootloader:
 
 Stage1:
