@@ -21,16 +21,16 @@ load_kernel:
     mov si, load_kernel_message
     call print
 
-    mov ah, 0x02                    ; Function: Read Sectors
-    mov dl, 0x80                    ; Reading from Hard Disk
-    mov dh, 0x00                    ; Head number (0)
-    mov ch, 0x00                    ; Cylinder number (0)
-    mov cl, 0x03                    ; Sector number (3)
-    mov al, 0x14                    ; Number of sectors to read (20)
-    mov bx, KERNEL_LOAD_SEG         ; Load kernel at memory address 0x1000
-    mov es, bx                      ; Set ES to the load address
+    mov ah, 0x02                    ; Read Sectors
+    mov dl, 0x80                    ; Drive number
+    mov dh, 0x00                    ; Head number
+    mov ch, 0x00                    ; Cylinder number
+    mov cl, 0x03                    ; Sector number
+    mov al, 0x14                    ; Number of sectors to read
+    mov bx, KERNEL_LOAD_SEG         ; Set Memory address to load Kernel
+    mov es, bx                      ; Set Extra segment to the load address
     int 0x13                        ; BIOS interrupt to read from disk
-    jc disk_error                   ; Jump to error handling if carry flag is set
+    jc disk_error                   
     ret
 
 ;Initializing Protected Mode
@@ -113,8 +113,8 @@ print:
 .done:
     ret
 
-load_kernel_message db "Loading Kernel to RAM..."    , 0x0D, 0x0A, 0
-switch_pm_message db "Initializing Protected Mode.." , 0x0D, 0x0A, 0
-disk_error_message db "Error Reading Disk..."        , 0x0D, 0x0A, 0
+load_kernel_message db "Loading Kernel to RAM..."      , 0x0D, 0x0A, 0
+switch_pm_message   db "Initializing Protected Mode.." , 0x0D, 0x0A, 0
+disk_error_message  db "Error Reading Disk..."         , 0x0D, 0x0A, 0
 
 times 512-($-$$) db 0
