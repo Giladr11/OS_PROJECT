@@ -10,10 +10,9 @@ This project is focused on building a two-stage bootloader and a kernel entirely
 - ⚡ **Segment and GDT Setup**
 - 🚀 **Multi-stage Bootloader**
 
-
+---
 
 ## 🛠️ PART 1: Implementing a Two-Stage Bootloader
-
 
 ### Stage 1
 - 🛡️ **Setting Up Segments**: Initialize segment registers to ensure proper memory management.
@@ -28,7 +27,7 @@ This project is focused on building a two-stage bootloader and a kernel entirely
 - 🔐 **Switching to Protected Mode**: Transition the CPU to protected mode for advanced memory features.
 - 🚀 **Transferring Control to Kernel**: Jump to the kernel's entry point to begin the OS's main operations.
 
-
+---
 
 ## 🖥️ PART 2: Implementing the Kernel
 The kernel is the core part of this operating system. Its main roles include managing CPU instructions, handling hardware communication, and performing system-level tasks.
@@ -38,7 +37,7 @@ The kernel is the core part of this operating system. Its main roles include man
 - 🔄 **Task Scheduling**: Handles multitasking and CPU process management.
 - 🛡️ **Interrupt Handling**: Responds to hardware and software interrupts.
 
-
+---
 
 ## 💻 How to Run the Project
 
