@@ -1,29 +1,64 @@
-# OS_PROJECT
+# 🖥️ OS_PROJECT
+
+![OS Logo](https://via.placeholder.com/150) <!-- Replace with actual logo/image -->
 
 ## Overview
-This project involves implementing a two-stage bootloader and a kernel from scratch, Aiming to Develop a Fully Functional 32 BITS Operating System. 
+This project is focused on building a two-stage bootloader and a kernel entirely from scratch, with the ultimate goal of developing a fully functional **32-bit Operating System**. The system is built to transition seamlessly from real mode to protected mode, leveraging low-level assembly and C/C++.
 
-## PART 1: Implementing a Two-Stage Bootloader
+## ⚙️ Key Features
+- 🔑 **32-bit Protected Mode** 
+- 🔄 **Checksum Verification** for kernel integrity
+- ⚡ **Segment and GDT Setup**
+- 🚀 **Multi-stage Bootloader**
 
-### Stage 1:
-- **Setting Up Segments**: Initialize segment registers for proper memory management
+---
 
-- **Loading Stage 2**: Load the second stage of the bootloader into memory.
+## 🛠️ PART 1: Implementing a Two-Stage Bootloader
 
-- **Transferring Control**: Jump to Stage2's entry address for further execution.
+### Stage 1
+- 🛡️ **Setting Up Segments**: Initialize segment registers to ensure proper memory management.
+- 📥 **Loading Stage 2**: Read the second stage of the bootloader into memory.
+- 🚀 **Transferring Control**: Jump to the entry point of Stage 2 for further execution.
 
-### Stage 2:
-- **Setting Up Segments**: Initialize segment registers for proper memory management
+![Bootloader Stage 1 Diagram](https://via.placeholder.com/600x200) <!-- Replace with actual image -->
 
-- **Loading Kernel to RAM**: Load the kernel into memory for execution.
+### Stage 2
+- 🛡️ **Setting Up Segments**: Initialize segment registers again to maintain proper memory management.
+- 📥 **Loading Kernel to RAM**: Load the kernel into memory for execution.
+- ✅ **Conducting CHECKSUM on the Kernel**: Verify the integrity of the kernel to ensure it hasn't been tampered with.
+- 🛠️ **Setting Up GDT**: Initialize the Global Descriptor Table for memory management in protected mode.
+- 🔐 **Switching to Protected Mode**: Transition the CPU to protected mode for advanced memory features.
+- 🚀 **Transferring Control to Kernel**: Jump to the kernel's entry point to begin the OS's main operations.
 
-- **Conducting CHECKSUM on the Kernel**: Verify the integrity of the kernel.
+![Bootloader Stage 2 Diagram](https://via.placeholder.com/600x200) <!-- Replace with actual image -->
 
-- **Setting Up GDT**: Initialize the Global Descriptor Table.
+---
 
-- **Switching to Protected Mode**: Transition the CPU to protected mode for advanced memory management.
+## 🖥️ PART 2: Implementing the Kernel
+The kernel is the core part of this operating system. Its main roles include managing CPU instructions, handling hardware communication, and performing system-level tasks.
 
-- **Transferring Control to Kernel**: Jump to the kernel's entry address to begin execution.
+### Key Responsibilities:
+- 🧠 **Memory Management**: Efficient allocation and deallocation of memory.
+- 🔄 **Task Scheduling**: Handles multitasking and CPU process management.
+- 🛡️ **Interrupt Handling**: Responds to hardware and software interrupts.
 
-## PART 2: Implementing The Kernel
+---
 
+## 💻 How to Run the Project
+
+### Prerequisites
+- Install [QEMU](https://www.qemu.org/) or any x86 emulator.
+- Ensure you have **NASM** (for assembly) and **GCC** (for C compilation) installed.
+
+### Steps to Run
+1. **Clone the Repository**:
+   ```bash
+   - **git clone https://github.com/Giladr11/OS_PROJECT.git
+   
+   - **cd OS_PROJECT
+
+   - **chmod +x build.sh (only if you didnt set execute premmision yet)
+
+   - **./build.sh
+
+   - **qemu-system-x86_64 -drive format=raw,file=build/disk.img
