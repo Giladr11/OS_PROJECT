@@ -3,13 +3,14 @@
 
 CODE_SEG equ 0x08
 DATA_SEG equ 0x10
-STAGE2_LOAD_SEG equ 0x2000
+STAGE2_LOAD_SEG equ 0x3630
 STAGE2_OFFSET equ 0x0000
 
 _start:
     xor ax, ax                 
-    mov ds, ax                   
-    mov es, ax
+    mov ds, ax
+    xor ax, ax
+    mov es, ax                   
     mov ss, ax
     mov sp, 0x7BFF
     

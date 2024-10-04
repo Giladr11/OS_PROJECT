@@ -1,4 +1,4 @@
-[ORG 0x2000]
+[ORG 0x3630]
 [BITS 16]
 
 CODE_SEG equ 0x08
@@ -7,11 +7,11 @@ KERNEL_LOAD_SEG equ 0x1000
 KERNEL_START_ADDR equ 0x100000
 
 _start: 
-    mov ax, 0x2000
+    mov ax, 0x3630
     mov ds, ax
     mov es, ax
     mov ss, ax
-    mov sp, 0x1FFE    
+    mov sp, 0x3A30
 
     call load_kernel
     jmp load_PM
