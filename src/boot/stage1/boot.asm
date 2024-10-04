@@ -1,6 +1,6 @@
 [ORG 0x7C00]
 [BITS 16]
-;fuck you
+
 CODE_SEG equ 0x08
 DATA_SEG equ 0x10
 STAGE2_LOAD_SEG equ 0x3630
