@@ -33,9 +33,7 @@ This project focuses on the development of a **32-bit operating system** from sc
 The kernel serves as the brain of the operating system, handling all system-level tasks, including hardware communication and CPU management.
 
 ### **Key Kernel Functions**
-- 🧠 **Memory Management**: Efficient allocation and deallocation of system memory.
-- 🔄 **Task Scheduling**: Manages multitasking and ensures efficient CPU usage.
-- 🛡️ **Interrupt Handling**: Processes hardware and software interrupts to maintain system stability.
+
 
 ---
 
