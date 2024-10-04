@@ -1,7 +1,5 @@
 # 🖥️ OS_PROJECT
 
-![OS Logo](https://via.placeholder.com/150) <!-- Replace with actual logo/image -->
-
 ## Overview
 This project is focused on building a two-stage bootloader and a kernel entirely from scratch, with the ultimate goal of developing a fully functional **32-bit Operating System**. The system is built to transition seamlessly from real mode to protected mode, leveraging low-level assembly and C/C++.
 
@@ -20,7 +18,6 @@ This project is focused on building a two-stage bootloader and a kernel entirely
 - 📥 **Loading Stage 2**: Read the second stage of the bootloader into memory.
 - 🚀 **Transferring Control**: Jump to the entry point of Stage 2 for further execution.
 
-![Bootloader Stage 1 Diagram](https://via.placeholder.com/600x200) <!-- Replace with actual image -->
 
 ### Stage 2
 - 🛡️ **Setting Up Segments**: Initialize segment registers again to maintain proper memory management.
@@ -53,12 +50,12 @@ The kernel is the core part of this operating system. Its main roles include man
 ### Steps to Run
 1. **Clone the Repository**:
    ```bash
-   - **git clone https://github.com/Giladr11/OS_PROJECT.git
+   git clone https://github.com/Giladr11/OS_PROJECT.git
    
-   - **cd OS_PROJECT
+   cd OS_PROJECT
 
-   - **chmod +x build.sh (only if you didnt set execute premmision yet)
+   chmod +x build.sh (only if you didnt set execute premmision yet)
 
-   - **./build.sh
+   ./build.sh
 
-   - **qemu-system-x86_64 -drive format=raw,file=build/disk.img
+   qemu-system-x86_64 -drive format=raw,file=build/disk.img
