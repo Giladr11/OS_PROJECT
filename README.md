@@ -93,7 +93,7 @@ The project follows a structured folder architecture for better organization:
 - *boot/stage1/: Assembly file for the first stage of the bootloader.*
 - *boot/stage2/: Assembly file for the second stage of the bootloader.*
 - *kernel/include/: Header files for the kernel.*
-- *kernel/: C++/C/linker/asm files for the kernel.*
+- *kernel/: C++/C/ld/asm files for the kernel.*
 
 #### **General Purpose Files**:
 
