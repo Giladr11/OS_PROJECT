@@ -4,7 +4,7 @@
 This project involves implementing a two-stage bootloader and a kernel from scratch. 
 In order to Develop a Full Working Operating System. 
 
-## PART 1: Implementing a Two-Stage Bootloader-
+## PART 1: Implementing a Two-Stage Bootloader
 
 ### Stage 1:
 - **Setting Up Segments**: Initialize segment registers for 
@@ -27,5 +27,5 @@ protected mode.
 
 - **Transferring Control to Kernel**: Jump to the kernel's entry point to begin execution.
 
-## PART 2: Implementing The Kernel-
-- Details about kernel implementation will be provided here.
+## PART 2: Implementing The Kernel
+
