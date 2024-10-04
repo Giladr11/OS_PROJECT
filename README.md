@@ -9,7 +9,6 @@ This project is focused on building a two-stage bootloader and a kernel entirely
 - ⚡ **Segment and GDT Setup**
 - 🚀 **Multi-stage Bootloader**
 
----
 
 ## 🛠️ PART 1: Implementing a Two-Stage Bootloader
 
@@ -17,7 +16,6 @@ This project is focused on building a two-stage bootloader and a kernel entirely
 - 🛡️ **Setting Up Segments**: Initialize segment registers to ensure proper memory management.
 - 📥 **Loading Stage 2**: Read the second stage of the bootloader into memory.
 - 🚀 **Transferring Control**: Jump to the entry point of Stage 2 for further execution.
-
 
 ### Stage 2
 - 🛡️ **Setting Up Segments**: Initialize segment registers again to maintain proper memory management.
@@ -27,9 +25,6 @@ This project is focused on building a two-stage bootloader and a kernel entirely
 - 🔐 **Switching to Protected Mode**: Transition the CPU to protected mode for advanced memory features.
 - 🚀 **Transferring Control to Kernel**: Jump to the kernel's entry point to begin the OS's main operations.
 
-![Bootloader Stage 2 Diagram](https://via.placeholder.com/600x200) <!-- Replace with actual image -->
-
----
 
 ## 🖥️ PART 2: Implementing the Kernel
 The kernel is the core part of this operating system. Its main roles include managing CPU instructions, handling hardware communication, and performing system-level tasks.
@@ -39,13 +34,12 @@ The kernel is the core part of this operating system. Its main roles include man
 - 🔄 **Task Scheduling**: Handles multitasking and CPU process management.
 - 🛡️ **Interrupt Handling**: Responds to hardware and software interrupts.
 
----
 
 ## 💻 How to Run the Project
 
 ### Prerequisites
 - Install [QEMU](https://www.qemu.org/) or any x86 emulator.
-- Ensure you have **NASM** (for assembly) and **GCC** (for C compilation) installed.
+- Ensure you have **NASM** (for assembly) and **GCC** (for C/c++ compilation) installed.
 
 ### Steps to Run
 1. **Clone the Repository**:
@@ -54,7 +48,7 @@ The kernel is the core part of this operating system. Its main roles include man
    
    cd OS_PROJECT
 
-   chmod +x build.sh (only if you didnt set execute premmision yet)
+   chmod +x build.sh (only need to set once)
 
    ./build.sh
 
