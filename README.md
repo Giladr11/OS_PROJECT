@@ -81,13 +81,13 @@ OS_PROJECT/
 ├── .gitignore
 └── README.md
 
-### **build/: Contains compiled outputs for the bootloader and kernel**:
+#### **build/: Contains compiled outputs for the bootloader and kernel**:
 
 - *boot/stage1/: Output files for the first stage of the bootloader.*
 - *boot/stage2/: Output files for the second stage of the bootloader.*
 - *kernel/obj/: Object files generated during the kernel compilation.*
 
-### **src/: Contains the source code for the bootloader and kernel**:
+#### **src/: Contains the source code for the bootloader and kernel**:
 
 - *boot/stage1/: Source files for the first stage of the bootloader.*
 - *boot/stage2/: Source files for the second stage of the bootloader.*
