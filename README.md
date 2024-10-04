@@ -94,6 +94,8 @@ The project follows a structured folder architecture for better organization:
 - *kernel/include/: Header files for the kernel.*
 - *kernel/: C++/C/linker/asm files for the kernel.*
 
+#### **General Purpose Files**:
+
 - *build.sh: A script to automate the build and execution process.*
 - *Makefile: Used for compiling the project.*
 - *.gitignore: Specifies files and directories that should be ignored by Git.*
