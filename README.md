@@ -8,6 +8,7 @@ This project focuses on the development of a **32-bit operating system** from sc
 - 🔄 **Checksum Verification**: Ensures kernel integrity before execution.
 - ⚡ **Segment and GDT Setup**: Properly configures memory segments and the Global Descriptor Table.
 - 🚀 **Multi-stage Bootloader**: Efficient two-stage bootloader to initialize the system.
+- 💬 **Command-Line Interface (CLI)**: Interactive interface allowing user commands for system management.
 
 ---
 
