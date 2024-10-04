@@ -1,5 +1,7 @@
 # OS_PROJECT
-Implementing a 2 stages bootloader:
+
+## PART 1:
+### Implementing a 2 stages bootloader:
 
 Stage1:
 * Setting up segments
@@ -13,3 +15,6 @@ Stage2:
 * Setting up GDT
 * Switching to PM
 * Transferring Control to Kernel
+
+## PART2:
+### Implemeting The Kernel
