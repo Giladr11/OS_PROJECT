@@ -10,7 +10,7 @@ This project involves implementing a two-stage bootloader and a kernel from scra
 
 - **Loading Stage 2**: Load the second stage of the bootloader into memory.
 
-- **Transferring Control**: Jump to Stage 2 for further execution.
+- **Transferring Control**: Jump to Stage2's entry address for further execution.
 
 ### Stage 2:
 - **Setting Up Segments**: Initialize segment registers for proper memory management
@@ -23,7 +23,7 @@ This project involves implementing a two-stage bootloader and a kernel from scra
 
 - **Switching to Protected Mode**: Transition the CPU to protected mode for advanced memory management.
 
-- **Transferring Control to Kernel**: Jump to the kernel's entry point to begin execution.
+- **Transferring Control to Kernel**: Jump to the kernel's entry address to begin execution.
 
 ## PART 2: Implementing The Kernel
 
