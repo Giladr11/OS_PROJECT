@@ -61,23 +61,23 @@ The kernel serves as the brain of the operating system, handling all system-leve
 ## 🛠️ **Project Structure**
 The project follows a structured folder architecture for better organization:
 
-OS_PROJECT/
-├── build/
-│   ├── boot/
-│   │   ├── stage1/
-│   │   └── stage2/
-│   └── kernel/
-│       └── obj/
-├── src/
-│   ├── boot/
-│   │   ├── stage1/
-│   │   └── stage2/
-│   └── kernel/
-│       └── include/
-├── build.sh
-├── Makefile
-├── .gitignore
-└── README.md
+    OS_PROJECT/
+    ├── build/
+    │   ├── boot/
+    │   │   ├── stage1/
+    │   │   └── stage2/
+    │   └── kernel/
+    │       └── obj/
+    ├── src/
+    │   ├── boot/
+    │   │   ├── stage1/
+    │   │   └── stage2/
+    │   └── kernel/
+    │       └── include/
+    ├── build.sh
+    ├── Makefile
+    ├── .gitignore
+    └── README.md
 
 #### **build/: Contains compiled outputs for the bootloader and kernel**:
 
