@@ -1,5 +1,7 @@
 # 🖥️ **OS_PROJECT**
 
+---
+
 ## Overview
 This project focuses on the development of a **32-bit operating system** from scratch. It implements a two-stage bootloader and a kernel, transitioning from real mode to protected mode. The system is built using **low-level assembly** and **C/C++** to demonstrate complete control over the hardware.
 
