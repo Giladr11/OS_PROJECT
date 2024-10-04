@@ -3,6 +3,7 @@
 ## Overview
 This project is focused on building a two-stage bootloader and a kernel entirely from scratch, with the ultimate goal of developing a fully functional **32-bit Operating System**. The system is built to transition seamlessly from real mode to protected mode, leveraging low-level assembly and C/C++.
 
+
 ## ⚙️ Key Features
 - 🔑 **32-bit Protected Mode** 
 - 🔄 **Checksum Verification** for kernel integrity
@@ -10,7 +11,9 @@ This project is focused on building a two-stage bootloader and a kernel entirely
 - 🚀 **Multi-stage Bootloader**
 
 
+
 ## 🛠️ PART 1: Implementing a Two-Stage Bootloader
+
 
 ### Stage 1
 - 🛡️ **Setting Up Segments**: Initialize segment registers to ensure proper memory management.
@@ -26,6 +29,7 @@ This project is focused on building a two-stage bootloader and a kernel entirely
 - 🚀 **Transferring Control to Kernel**: Jump to the kernel's entry point to begin the OS's main operations.
 
 
+
 ## 🖥️ PART 2: Implementing the Kernel
 The kernel is the core part of this operating system. Its main roles include managing CPU instructions, handling hardware communication, and performing system-level tasks.
 
@@ -33,6 +37,7 @@ The kernel is the core part of this operating system. Its main roles include man
 - 🧠 **Memory Management**: Efficient allocation and deallocation of memory.
 - 🔄 **Task Scheduling**: Handles multitasking and CPU process management.
 - 🛡️ **Interrupt Handling**: Responds to hardware and software interrupts.
+
 
 
 ## 💻 How to Run the Project
