@@ -86,7 +86,7 @@ The project follows a structured folder architecture for better organization:
 - *boot/stage2/: Binary file generated during the bootloader's Stage2 compilation.*
 - *kernel/obj/: Object files generated during the kernel compilation.*
 - *kernel/: Binary file generated at the end of kernel compilations.*
-- *build/: Disk Image file generated after all compilations*
+- *build/: Disk Image file generated after all of the compilations*
 
 #### **src/: Contains the source code for the bootloader and kernel**:
 
