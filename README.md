@@ -59,6 +59,8 @@ The kernel serves as the brain of the operating system, handling all system-leve
     ./build.sh
     qemu-system-x86_64 -drive format=raw,file=build/disk.img
 
+---
+
 ## 🛠️ **Project Structure**
 The project follows a structured folder architecture for better organization:
 
