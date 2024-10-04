@@ -79,17 +79,20 @@ The project follows a structured folder architecture for better organization:
     ├── .gitignore
     └── README.md
 
-#### **build/: Contains compiled outputs for the bootloader and kernel**:
+#### **build/: Contains compiled files for the bootloader, kernel and final disk image**:
 
-- *boot/stage1/: Output files for the first stage of the bootloader.*
-- *boot/stage2/: Output files for the second stage of the bootloader.*
+- *boot/stage1/: Binary file generated during the bootloader's Stage1 compilation.*
+- *boot/stage2/: Binary file generated during the bootloader's Stage2 compilation.*
 - *kernel/obj/: Object files generated during the kernel compilation.*
+- *kernel/: Binary file generated during the kernel compilation.*
+- *build/: Final disk.img generated after all of the compilations*
 
 #### **src/: Contains the source code for the bootloader and kernel**:
 
-- *boot/stage1/: Source files for the first stage of the bootloader.*
-- *boot/stage2/: Source files for the second stage of the bootloader.*
+- *boot/stage1/: Assembly file for the first stage of the bootloader.*
+- *boot/stage2/: Assembly file for the second stage of the bootloader.*
 - *kernel/include/: Header files for the kernel.*
+- *kernel/: C++/C/linker/asm files for the kernel.*
 
 - *build.sh: A script to automate the build and execution process.*
 - *Makefile: Used for compiling the project.*
