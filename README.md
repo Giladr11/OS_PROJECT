@@ -98,4 +98,4 @@ OS_PROJECT/
 - *.gitignore: Specifies files and directories that should be ignored by Git.*
 - *README.md: Documentation for the project.*
 
-**By following the steps above, you can easily build and run your custom 32-bit operating system on QEMU or any compatible emulator.**
+**By following the steps above, you can easily build and run your custom 32-bit operating system on QEMU or any other compatible emulator.**
