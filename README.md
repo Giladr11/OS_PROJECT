@@ -1,7 +1,7 @@
 # OS_PROJECT
 
 ## Overview
-This project involves implementing a two-stage bootloader and a kernel from scratch, Aiming to Develop a Fully Functional Operating System. 
+This project involves implementing a two-stage bootloader and a kernel from scratch, Aiming to Develop a Fully Functional 32 BITS Operating System. 
 
 ## PART 1: Implementing a Two-Stage Bootloader
 
