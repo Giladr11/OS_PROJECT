@@ -1,4 +1,4 @@
-// kernel.c
+#include "include/kernel.h"
 
 // Define the VGA text buffer address
 #define VGA_BUFFER_ADDRESS 0xB8000

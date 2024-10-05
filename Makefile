@@ -6,26 +6,34 @@ STAGE1_DIR = stage1
 STAGE2_DIR = stage2
 KERNEL_DIR = kernel
 OBJ_DIR = obj
+INCLUDE_DIR = include
 
 # Compilers:
-# Boot
+## Boot
 NASM_CMD = nasm
 NASM_FLAGS = -f bin
-# Kernel
+## Kernel
 I686_GCC = i686-elf-gcc
 I686_LD = i686-elf-ld
 CXX_FLAGS = -g -ffreestanding -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -Iinc
 
 # SRC Files:
 # Boot Source File
-#STAGE1
+PRINT16_SRC = $(SRC_DIR)/$(BOOT_DIR)/Print16.asm
+##STAGE1
 BOOT_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE1_DIR)/boot.asm
-#STAGE2
+##STAGE2
 LOADER_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/loader.asm
-# Kernel Source Files:
+###INCLUDE
+GDT_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/GDT.asm
+A20_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/A20.asm
+INITPM_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/INITPM.asm
+## Kernel Source Files:
 KERNEL_ASM_SRC = $(SRC_DIR)/$(KERNEL_DIR)/kernel.asm
-KERNEL_C_SRC = $(SRC_DIR)/$(KERNEL_DIR)/kernel.c
 SCRIPT_LINKER = $(SRC_DIR)/$(KERNEL_DIR)/linker.ld
+MAINKERNEL_C_SRC = $(SRC_DIR)/$(KERNEL_DIR)/KernelMain.c
+###INCLUDE:
+KERNEL_H = $(SRC_DIR)/$(KERNEL_DIR)/$(INCLUDE_DIR)/kernel.h
 
 # Disk Image Commands:
 SECTOR_SIZE = 512 	#bytes
@@ -35,16 +43,16 @@ COUNT = 1
 
 # BUILD Files:
 # Boot Build Files 
-#STAGE1
+##STAGE1
 BOOT_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE1_DIR)/boot.bin
-#STAGE2
+##STAGE2
 LOADER_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/loader.bin
-# Kernel Build Files
-KERNEL_C_OBJ = $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/kernel.o
+## Kernel OBJ Files
+MAINKERNEL_C_OBJ = $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/kernel.o
 KERNEL_ASM_OBJ = $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/kernel.asm.o
 LINKED_KERNEL_OBJ = $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/linkedKernel.o
 KERNEL_BIN = $(BUILD_DIR)/$(KERNEL_DIR)/kernel.bin
-# Final Disk Image
+## Final Disk Image
 DISK_IMG = $(BUILD_DIR)/disk.img
 
 # Clean Build Directory:
@@ -69,12 +77,12 @@ $(DISK_IMG): $(BOOT_BIN) $(LOADER_BIN) $(KERNEL_BIN)
 	dd if=$(KERNEL_BIN) of=$(DISK_IMG) bs=$(KERNEL_SIZE) count=$(COUNT) seek=$(KERNEL_SEEK) conv=$(CONV)
 
 # Compile stage1
-$(BOOT_BIN): $(BOOT_SRC)
+$(BOOT_BIN): $(BOOT_SRC) $(PRINT16_SRC)
 	@echo "Compiling $(BOOT_BIN)..."
 	$(NASM_CMD) $(NASM_FLAGS) $(BOOT_SRC) -o $(BOOT_BIN)
 
 # Compile stage2
-$(LOADER_BIN): $(LOADER_SRC)
+$(LOADER_BIN): $(LOADER_SRC) $(GDT_SRC) $(A20_SRC) $(INITPM_SRC) $(PRINT16_SRC)
 	@echo "Compiling $(LOADER_BIN)..."
 	$(NASM_CMD) $(NASM_FLAGS) $(LOADER_SRC) -o $(LOADER_BIN)
 
@@ -84,9 +92,9 @@ $(KERNEL_BIN): $(SCRIPT_LINKER) $(LINKED_KERNEL_OBJ)
 	$(I686_GCC) $(CXX_FLAGS) -T $(SCRIPT_LINKER) -o $(KERNEL_BIN) -ffreestanding -O0 -nostdlib $(LINKED_KERNEL_OBJ)
 
 # Compiling linkedKernel.o 
-$(LINKED_KERNEL_OBJ): $(KERNEL_ASM_OBJ) $(KERNEL_C_OBJ)
+$(LINKED_KERNEL_OBJ): $(KERNEL_ASM_OBJ) $(MAINKERNEL_C_OBJ)
 	@echo "Compiling $(LINKED_KERNEL_OBJ)..."
-	$(I686_LD) -g -relocatable $(KERNEL_ASM_OBJ) $(KERNEL_C_OBJ) -o $(LINKED_KERNEL_OBJ)
+	$(I686_LD) -g -relocatable $(KERNEL_ASM_OBJ) $(MAINKERNEL_C_OBJ) -o $(LINKED_KERNEL_OBJ)
 
 # Compiling kernel.asm.o
 $(KERNEL_ASM_OBJ): $(KERNEL_ASM_SRC)
@@ -94,9 +102,9 @@ $(KERNEL_ASM_OBJ): $(KERNEL_ASM_SRC)
 	$(NASM_CMD) -f elf $(KERNEL_ASM_SRC) -o $(KERNEL_ASM_OBJ)
 
 # Compiling kernel.o
-$(KERNEL_C_OBJ): $(KERNEL_C_SRC)
-	@echo "Compiling $(KERNEL_C_OBJ)..."
-	$(I686_GCC) -I./src/kernel/include $(CXX_FLAGS) -std=gnu99 -c $(KERNEL_C_SRC) -o $(KERNEL_C_OBJ)
+$(MAINKERNEL_C_OBJ): $(MAINKERNEL_C_SRC) $(KERNEL_H)
+	@echo "Compiling $(MAINKERNEL_C_OBJ)..."
+	$(I686_GCC) -I./src/kernel/include $(CXX_FLAGS) -std=gnu99 -c $(MAINKERNEL_C_SRC) -o $(MAINKERNEL_C_OBJ)
 
 # Clean Build Directory
 clean:
