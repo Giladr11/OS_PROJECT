@@ -109,6 +109,7 @@ The project follows a structured folder architecture for better organization:
 #### **General Purpose Files**:
 
 - *build.sh: A script to automate the build and execution process.*
+- *LICENSE: A legal document that outlines the terms and conditions under which this project can be used, modified, and distributed.*
 - *Makefile: Used for compiling the project.*
 - *.gitignore: Specifies files and directories that should be ignored by Git.*
 - *README.md: Documentation for the project.*
