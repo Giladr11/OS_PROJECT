@@ -17,7 +17,6 @@ load_PM:
 
     jmp CODE_SEG:PModeMain       
 
-;Set up segments for protected mode
 [BITS 32]     
 PModeMain:
     mov ax, DATA_SEG                

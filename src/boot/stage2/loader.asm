@@ -15,7 +15,6 @@ _start:
     call load_kernel
     jmp load_PM
 
-;Load kernel to RAM
 load_kernel:
     mov si, load_kernel_message
     call print
