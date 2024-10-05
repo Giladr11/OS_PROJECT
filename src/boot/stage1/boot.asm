@@ -1,8 +1,7 @@
+;Main Stage1
 [ORG 0x7C00]
 [BITS 16]
 
-CODE_SEG equ 0x08
-DATA_SEG equ 0x10
 STAGE2_LOAD_SEG equ 0x4000
 STAGE2_OFFSET equ 0x0000
 
@@ -41,20 +40,11 @@ disk_error:
     call print             
     hlt                          
 
-print:
-    mov ah, 0x0E
-.printchar:
-    lodsb
-    cmp al, 0
-    je .done
-    int 0x10
-    jmp .printchar
-.done:
-    ret
-
 init_boot_message  db "Initializing Booting Process..." , 0x0D, 0x0A, 0
 stage2_message     db "Loading Stage2..."               , 0x0D, 0x0A, 0 
 disk_error_message db "Error Reading Disk..."           , 0x0D, 0x0A, 0
+
+%include "src/boot/Print16.asm"
 
 times 510-($-$$) db 0
 dw 0xAA55

@@ -1,4 +1,4 @@
-; Initializing A20 line
+;Initialize A20 line
 [BITS 32]
 INITA20:
     in al, 0x92

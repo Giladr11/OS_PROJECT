@@ -1,4 +1,4 @@
-;Print (16-bit) Real-Mode
+;Print in (16-bit) Real-Mode
 
 %ifndef PRINT16_ASM
 %define PRINT16_ASM

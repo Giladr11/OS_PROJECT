@@ -10,7 +10,7 @@ _start:
     xor ax, ax
     mov es, ax
     mov ss, ax
-    mov sp, 0x4400
+    mov sp, 0x3FFF
 
     call load_kernel
     jmp load_PM

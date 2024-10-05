@@ -71,14 +71,19 @@ The project follows a structured folder architecture for better organization:
     │   ├── boot/
     │   │   ├── stage1/
     │   │   └── stage2/
+    |   |
     │   └── kernel/
     │       └── obj/
+    |
     ├── src/
     │   ├── boot/
     │   │   ├── stage1/
     │   │   └── stage2/
+    |   |       └──include/
+    |   |
     │   └── kernel/
     │       └── include/
+    |
     ├── build.sh
     ├── Makefile
     ├── .gitignore
@@ -94,8 +99,9 @@ The project follows a structured folder architecture for better organization:
 
 #### **src/: Contains the source code for the bootloader and kernel**:
 
-- *boot/stage1/: Assembly file for the first stage of the bootloader.*
-- *boot/stage2/: Assembly file for the second stage of the bootloader.*
+- *boot/stage1/: Main Stage1 Assembly file for the first stage.*
+- *boot/stage2/: Main Stage2 Assembly file for the second stage.*
+- *boot/stage2/include/: Assembly files for the second stage*
 - *kernel/include/: Header files for the kernel.*
 - *kernel/: C++/C/ld/asm files for the kernel.*
 
