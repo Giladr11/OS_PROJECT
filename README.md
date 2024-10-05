@@ -85,6 +85,7 @@ The project follows a structured folder architecture for better organization:
     │       └── include/
     |
     ├── build.sh
+    ├── LICENSE
     ├── Makefile
     ├── .gitignore
     └── README.md
