@@ -1,4 +1,4 @@
-;Set up GDT
+;Setting up GDT
 GDT_START:
 
     GDT_NULL:
