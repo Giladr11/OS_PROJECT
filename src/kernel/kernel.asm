@@ -1,6 +1,6 @@
 [BITS 32]                        
 
-global _start
+global _START
 
 extern kernel_main
 
