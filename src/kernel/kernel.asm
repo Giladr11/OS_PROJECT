@@ -4,7 +4,7 @@ global _start
 
 extern kernel_main
 
-_start:
+_START:
     call kernel_main
     jmp $
 

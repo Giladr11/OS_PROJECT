@@ -3,17 +3,17 @@
 %ifndef PRINT16_ASM
 %define PRINT16_ASM
 
-print:
+PRINT:
     mov ah, 0x0E
 
-.printchar:
+.PRINTCHAR:
     lodsb
     cmp al, 0
-    je .done
+    je .DONE
     int 0x10
-    jmp .printchar
+    jmp .PRINTCHAR
 
-.done:
+.DONE:
     ret
 
 %endif

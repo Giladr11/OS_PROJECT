@@ -15,12 +15,12 @@ INITA20:
 
 A20_SUCCESS:    
     mov si, success_messsage
-    call print
+    call PRINT
     ret
 
 A20_FAILED:
     mov si, error_messsage
-    call print
+    call PRINT
     hlt
 
 success_messsage db "Successfully Enabled A20!" , 0x0D, 0x0A, 0

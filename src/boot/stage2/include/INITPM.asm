@@ -3,9 +3,8 @@
 
 KERNEL_START_ADDR equ 0x100000
 
-load_PM:
-    mov si, PM_message
-    call print
+LOAD_PM:
+    call PRINT_PM
 
     cli
     
@@ -15,11 +14,7 @@ load_PM:
 
     mov eax, cr0
     or eax, 0x1                 
-    mov cr0, eax                
-
-    mov eax, cr0
-    test eax, 0x1
-    jz ERROR_PM
+    ;mov cr0, eax                
 
     jmp CODE_SEG:PModeMain       
 
@@ -37,14 +32,13 @@ PModeMain:
     
     jmp CODE_SEG:KERNEL_START_ADDR
 
-ERROR_PM:
-    mov si, ERROR_PM_message
-    call print
-    hlt
+[BITS 16]
+PRINT_PM:
+    mov si, PM_message
+    call PRINT
+    ret
 
 PM_message db "Initializing Protected Mode.." , 0x0D, 0x0A, 0
-ERROR_PM_message db "Error Switching to Protected Mode...", 0x0D, 0x0A, 0
-
 
 %include "src/boot/stage2/include/GDT.asm"
 %include "src/boot/stage2/include/A20.asm"

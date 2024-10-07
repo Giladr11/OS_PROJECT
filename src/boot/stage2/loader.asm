@@ -1,23 +1,21 @@
 ;Main Stage2
-[ORG 0x4000]
+[ORG 0x6000]
 [BITS 16]
 
 KERNEL_LOAD_SEG equ 0x1000
 
-_start: 
-    mov ax, 0x4000
+_START: 
+    mov ax, 0x6000
     mov ds, ax
-    xor ax, ax
     mov es, ax
     mov ss, ax
-    mov sp, 0x3FFF
+    mov sp, 0x5FFF
 
-    call load_kernel
-    jmp load_PM
+    call LOAD_KERNEL
+    jmp LOAD_PM
 
-load_kernel:
-    mov si, load_kernel_message
-    call print
+LOAD_KERNEL:
+    call LOAD_KERNEL_MESSAGE
 
     mov ah, 0x02                    ; Read Sectors
     mov dl, 0x80                    ; Drive number
@@ -28,12 +26,17 @@ load_kernel:
     mov bx, KERNEL_LOAD_SEG         ; Set Memory address to load Kernel
     mov es, bx                      ; Set Extra segment to the load address
     int 0x13                        ; BIOS interrupt to read from disk
-    jc disk_error                   
+    jc DISK_ERROR                   
     ret
 
-disk_error:
+LOAD_KERNEL_MESSAGE:
+    mov si, load_kernel_message
+    call PRINT
+    ret
+
+DISK_ERROR:
     mov si, disk_error_message
-    call print             
+    call PRINT             
     hlt                          
 
 load_kernel_message db "Loading Kernel to RAM..."  , 0x0D, 0x0A, 0
