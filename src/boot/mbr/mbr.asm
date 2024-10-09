@@ -51,7 +51,7 @@ init_boot_message  db "Initializing Booting Process..." , 0x0D, 0x0A, 0
 stage2_message     db "Loading Stage2..."               , 0x0D, 0x0A, 0 
 disk_error_message db "Error Reading Disk..."           , 0x0D, 0x0A, 0
 
-%include "src/boot/Print16.asm"
+%include "src/boot/PRINT16.asm"
 
 times 510-($-$$) db 0
 dw 0xAA55

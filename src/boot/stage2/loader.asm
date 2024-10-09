@@ -43,6 +43,6 @@ load_kernel_message db "Loading Kernel to RAM..."  , 0x0D, 0x0A, 0
 disk_error_message  db "Error Reading Disk..."     , 0x0D, 0x0A, 0
 
 %include "src/boot/stage2/include/INITPM.asm"
-%include "src/boot/Print16.asm"
+%include "src/boot/PRINT16.asm"
 
 times 512-($-$$) db 0
