@@ -1,4 +1,4 @@
-;Initializing A20 line
+;Enabling A20 line
 [BITS 16]
 
 INITA20:
