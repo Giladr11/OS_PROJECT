@@ -40,6 +40,6 @@ PRINT_PM:
 
 PM_message db "Initializing Protected Mode.." , 0x0D, 0x0A, 0
 
-%include "src/boot/stage2/include/GDT.asm"
-%include "src/boot/stage2/include/A20.asm"
-%include "src/boot/PRINT16.asm"
+%include "src/boot/stage2/include/gdt.asm"
+%include "src/boot/stage2/include/a20.asm"
+%include "src/boot/print16.asm"

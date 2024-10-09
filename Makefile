@@ -19,15 +19,16 @@ CXX_FLAGS = -g -ffreestanding -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -
 
 # SRC Files:
 # Boot Source File
-PRINT16_SRC = $(SRC_DIR)/$(BOOT_DIR)/PRINT16.asm
+PRINT16_SRC = $(SRC_DIR)/$(BOOT_DIR)/print16.asm
 ##MBR
 MBR_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(MBR_DIR)/mbr.asm
 ##STAGE2
 LOADER_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/loader.asm
 ###INCLUDE
-GDT_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/GDT.asm
-A20_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/A20.asm
-INITPM_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/INITPM.asm
+CRC32_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/crc32.asm
+GDT_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/gdt.asm
+A20_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/a20.asm
+INITPM_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/initpm.asm
 ## Kernel Source Files:
 KERNEL_ASM_SRC = $(SRC_DIR)/$(KERNEL_DIR)/kernel.asm
 SCRIPT_LINKER = $(SRC_DIR)/$(KERNEL_DIR)/linker.ld
@@ -47,6 +48,7 @@ COUNT = 1
 MBR_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(MBR_DIR)/mbr.bin
 ##STAGE2
 LOADER_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/loader.bin
+CRC32_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/crc32.bin
 ## Kernel OBJ Files
 MAINKERNEL_C_OBJ = $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/kernel.o
 KERNEL_ASM_OBJ = $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/kernel.asm.o
@@ -82,9 +84,13 @@ $(MBR_BIN): $(MBR_SRC) $(PRINT16_SRC)
 	$(NASM_CMD) $(NASM_FLAGS) $(MBR_SRC) -o $(MBR_BIN)
 
 # Compile stage2
-$(LOADER_BIN): $(LOADER_SRC) $(GDT_SRC) $(A20_SRC) $(INITPM_SRC) $(PRINT16_SRC)
+$(LOADER_BIN): $(LOADER_SRC) $(GDT_SRC) $(A20_SRC) $(INITPM_SRC) $(CRC32_BIN) $(PRINT16_SRC)
 	@echo "Compiling $(LOADER_BIN)..."
 	$(NASM_CMD) $(NASM_FLAGS) $(LOADER_SRC) -o $(LOADER_BIN)
+
+# Compiling crc32
+$(CRC32_BIN): $(CRC32_SRC)
+	$(NASM_CMD) $(NASM_FLAGS) $(CRC32_SRC) -o $(CRC32_BIN)
 
 # Compiling Final kernel.bin
 $(KERNEL_BIN): $(SCRIPT_LINKER) $(LINKED_KERNEL_OBJ)
