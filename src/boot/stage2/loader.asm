@@ -1,4 +1,4 @@
-;Main Stage2
+;Main Loader
 [ORG 0x6000]
 [BITS 16]
 

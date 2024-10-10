@@ -48,7 +48,8 @@ COUNT = 1
 MBR_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(MBR_DIR)/mbr.bin
 ##STAGE2
 LOADER_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/loader.bin
-CRC32_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/crc32.bin
+CRC32_OBJ = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/crc32.o
+CRC32_EXE = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/crc32.exe
 ## Kernel OBJ Files
 MAINKERNEL_C_OBJ = $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/kernel.o
 KERNEL_ASM_OBJ = $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/kernel.asm.o
@@ -84,13 +85,17 @@ $(MBR_BIN): $(MBR_SRC) $(PRINT16_SRC)
 	$(NASM_CMD) $(NASM_FLAGS) $(MBR_SRC) -o $(MBR_BIN)
 
 # Compile stage2
-$(LOADER_BIN): $(LOADER_SRC) $(GDT_SRC) $(A20_SRC) $(INITPM_SRC) $(CRC32_BIN) $(PRINT16_SRC)
+$(LOADER_BIN): $(LOADER_SRC) $(GDT_SRC) $(A20_SRC) $(INITPM_SRC) $(CRC32_EXE) $(PRINT16_SRC)
 	@echo "Compiling $(LOADER_BIN)..."
 	$(NASM_CMD) $(NASM_FLAGS) $(LOADER_SRC) -o $(LOADER_BIN)
 
-# Compiling crc32
-$(CRC32_BIN): $(CRC32_SRC)
-	$(NASM_CMD) $(NASM_FLAGS) $(CRC32_SRC) -o $(CRC32_BIN)
+# Compiling crc32.exe
+$(CRC32_EXE): $(CRC32_OBJ)
+	ld -m elf_i386 -o $(CRC32_EXE) $(CRC32_OBJ)
+
+# Compiling crc32.o
+$(CRC32_OBJ): $(CRC32_SRC)
+	$(NASM_CMD) -f elf32 $(CRC32_SRC) -o $(CRC32_OBJ)
 
 # Compiling Final kernel.bin
 $(KERNEL_BIN): $(SCRIPT_LINKER) $(LINKED_KERNEL_OBJ)

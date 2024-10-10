@@ -1,4 +1,4 @@
-;Main Stage1
+;Main MBR
 [ORG 0x7C00]
 [BITS 16]
 
