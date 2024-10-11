@@ -6,15 +6,11 @@ STAGE2_LOAD_SEG equ 0x8000
 STAGE2_OFFSET equ 0x0000
 
 _START:
-    cli 
-
     xor ax, ax                
     mov ds, ax
     mov es, ax                    
     mov ss, ax
     mov sp, 0x7BFF
-    
-    sti
 
     call INIT_BOOT_MESSAGE
 
