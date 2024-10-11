@@ -84,11 +84,13 @@ The project follows a structured folder architecture for better organization:
     │   └── kernel/
     │       └── include/
     |
+    ├── docs/
+    |   ├── README.md
+    |   └── LICENSE
+    |
     ├── build.sh
-    ├── LICENSE
-    ├── Makefile
     ├── .gitignore
-    └── README.md
+    └── Makefile
 
 #### **build/: Contains compiled files for the bootloader, kernel and final disk image**:
 

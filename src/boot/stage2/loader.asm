@@ -5,12 +5,16 @@
 KERNEL_LOAD_SEG equ 0x1000
 
 _START: 
+    cli 
+
     mov ax, 0x8000
     mov ds, ax
     mov ss, ax
     mov es, ax
 
-    mov sp, 0x0400  
+    mov sp, 0x0600  
+
+    sti
 
     call LOAD_KERNEL
     jmp LOAD_PM
