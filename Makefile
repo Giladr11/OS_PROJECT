@@ -2,7 +2,7 @@
 BUILD_DIR = build
 SRC_DIR = src
 BOOT_DIR = boot
-MBR_DIR = mbr
+BOOTSEC_DIR = bootsec
 STAGE2_DIR = stage2
 KERNEL_DIR = kernel
 OBJ_DIR = obj
@@ -20,8 +20,8 @@ CXX_FLAGS = -g -ffreestanding -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -
 # SRC Files:
 # Boot Source File
 PRINT16_SRC = $(SRC_DIR)/$(BOOT_DIR)/print16.asm
-##MBR
-MBR_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(MBR_DIR)/mbr.asm
+##BOOTSEC
+BOOTSEC_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(BOOTSEC_DIR)/bootsec.asm
 ##STAGE2
 LOADER_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/loader.asm
 ###INCLUDE
@@ -44,8 +44,8 @@ COUNT = 1
 
 # BUILD Files:
 # Boot Build Files 
-##MBR
-MBR_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(MBR_DIR)/mbr.bin
+##BOOTSEC
+BOOTSEC_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(BOOTSEC_DIR)/bootsec.bin
 ##STAGE2
 LOADER_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/loader.bin
 CRC32_OBJ = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/crc32.o
@@ -68,9 +68,9 @@ CLEAN_BUILD3 = *.o
 all: $(DISK_IMG)
 
 # Compile disk image
-$(DISK_IMG): $(MBR_BIN) $(LOADER_BIN) $(KERNEL_BIN)
+$(DISK_IMG): $(BOOTSEC_BIN) $(LOADER_BIN) $(KERNEL_BIN)
 	@echo "Building $(DISK_IMG)..."
-	dd if=$(MBR_BIN) of=$(DISK_IMG) bs=$(SECTOR_SIZE) count=$(COUNT) conv=$(CONV)
+	dd if=$(BOOTSEC_BIN) of=$(DISK_IMG) bs=$(SECTOR_SIZE) count=$(COUNT) conv=$(CONV)
 
 	$(eval LOADER_SIZE := $(shell stat -c%s $(LOADER_BIN)))
 	dd if=$(LOADER_BIN) of=$(DISK_IMG) bs=$(LOADER_SIZE) count=$(COUNT) seek=$(STAGE2_SEEK) conv=$(CONV)
@@ -79,10 +79,10 @@ $(DISK_IMG): $(MBR_BIN) $(LOADER_BIN) $(KERNEL_BIN)
 	$(eval KERNEL_SIZE := $(shell stat -c%s $(KERNEL_BIN)))
 	dd if=$(KERNEL_BIN) of=$(DISK_IMG) bs=$(KERNEL_SIZE) count=$(COUNT) seek=$(KERNEL_SEEK) conv=$(CONV)
 
-# Compile mbr
-$(MBR_BIN): $(MBR_SRC) $(PRINT16_SRC)
-	@echo "Compiling $(MBR_BIN)..."
-	$(NASM_CMD) $(NASM_FLAGS) $(MBR_SRC) -o $(MBR_BIN)
+# Compile bootsec
+$(BOOTSEC_BIN): $(BOOTSEC_SRC) $(PRINT16_SRC)
+	@echo "Compiling $(BOOTSEC_BIN)..."
+	$(NASM_CMD) $(NASM_FLAGS) $(BOOTSEC_SRC) -o $(BOOTSEC_BIN)
 
 # Compile stage2
 $(LOADER_BIN): $(LOADER_SRC) $(GDT_SRC) $(A20_SRC) $(INITPM_SRC) $(CRC32_EXE) $(PRINT16_SRC)
@@ -120,7 +120,7 @@ $(MAINKERNEL_C_OBJ): $(MAINKERNEL_C_SRC) $(KERNEL_H)
 # Clean Build Directory
 clean:
 	@echo "Cleaning '$(BUILD_DIR)' Directory..."
-	$(RM_CMD) $(BUILD_DIR)/$(BOOT_DIR)/$(MBR_DIR)/$(CLEAN_BUILD1) $(BUILD_DIR)/$(BOOT_DIR)/$(MBR_DIR)/$(CLEAN_BUILD2) $(BUILD_DIR)/$(BOOT_DIR)/$(MBR_DIR)/$(CLEAN_BUILD3)
+	$(RM_CMD) $(BUILD_DIR)/$(BOOT_DIR)/$(BOOTSEC_DIR)/$(CLEAN_BUILD1) $(BUILD_DIR)/$(BOOT_DIR)/$(BOOTSEC_DIR)/$(CLEAN_BUILD2) $(BUILD_DIR)/$(BOOT_DIR)/$(BOOTSEC_DIR)/$(CLEAN_BUILD3)
 	$(RM_CMD) $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(CLEAN_BUILD1) $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(CLEAN_BUILD2) $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(CLEAN_BUILD3)
 	$(RM_CMD) $(BUILD_DIR)/$(KERNEL_DIR)/$(CLEAN_BUILD1) $(BUILD_DIR)/$(KERNEL_DIR)/$(CLEAN_BUILD2) $(BUILD_DIR)/$(KERNEL_DIR)/$(CLEAN_BUILD3)
 	$(RM_CMD) $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/$(CLEAN_BUILD1) $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/$(CLEAN_BUILD2) $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/$(CLEAN_BUILD3)
