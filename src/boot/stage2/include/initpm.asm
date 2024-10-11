@@ -14,7 +14,7 @@ LOAD_PM:
 
     mov eax, cr0
     or eax, 0x1                 
-    ;mov cr0, eax                
+    mov cr0, eax                
 
     jmp CODE_SEG:PModeMain       
 

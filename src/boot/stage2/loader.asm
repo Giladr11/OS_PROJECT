@@ -1,15 +1,16 @@
-;Main Loader
-[ORG 0x6000]
+;Main loader
+[ORG 0x8000]
 [BITS 16]
 
 KERNEL_LOAD_SEG equ 0x1000
 
 _START: 
-    mov ax, 0x6000
+    mov ax, 0x8000
     mov ds, ax
-    mov es, ax
     mov ss, ax
-    mov sp, 0x5FFF
+    mov es, ax
+
+    mov sp, 0x0400  
 
     call LOAD_KERNEL
     jmp LOAD_PM
