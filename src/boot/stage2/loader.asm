@@ -4,46 +4,52 @@
 
 KERNEL_LOAD_SEG equ 0x1000
 
-_START: 
+_start: 
     mov ax, 0x8000
     mov ds, ax
     mov ss, ax
     mov es, ax
 
-    mov sp, 0x0600  
+    mov sp, 0x7FFF 
 
-    call LOAD_KERNEL
-    jmp LOAD_PM
+    call load_kernel
+    
+    mov esi, input
+    call _start_crc32
 
-LOAD_KERNEL:
-    call LOAD_KERNEL_MESSAGE
+    jmp load_pm
+
+load_kernel:
+    call print_kernel_msg
 
     mov ah, 0x02                    ; Read Sectors
     mov dl, 0x80                    ; Drive number
     mov dh, 0x00                    ; Head number
     mov ch, 0x00                    ; Cylinder number
-    mov cl, 0x03                    ; Sector number
-    mov al, 0x14                    ; Number of sectors to read
+    mov cl, 0x07                    ; Sector number
+    mov al, 0x0C                    ; Number of sectors to read
     mov bx, KERNEL_LOAD_SEG         ; Set Memory address to load Kernel
     mov es, bx                      ; Set Extra segment to the load address
     int 0x13                        ; BIOS interrupt to read from disk
-    jc DISK_ERROR                   
+    jc print_disk_error                  
     ret
 
-LOAD_KERNEL_MESSAGE:
+print_kernel_msg:
     mov si, load_kernel_message
-    call PRINT
+    call print
     ret
 
-DISK_ERROR:
+print_disk_error:
     mov si, disk_error_message
-    call PRINT             
+    call print             
     hlt                          
 
+input db "GILAD", 0
 load_kernel_message db "Loading Kernel to RAM..."  , 0x0D, 0x0A, 0
 disk_error_message  db "Error Reading Disk..."     , 0x0D, 0x0A, 0
 
 %include "src/boot/stage2/include/initpm.asm"
+%include "src/boot/stage2/include/crc32.asm"
 %include "src/boot/print16.asm"
 
-times 512-($-$$) db 0
+times 1536-($-$$) db 0

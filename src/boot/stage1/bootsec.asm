@@ -5,46 +5,46 @@
 STAGE2_LOAD_SEG equ 0x8000
 STAGE2_OFFSET equ 0x0000
 
-_START:
+_start:
     xor ax, ax                
     mov ds, ax
     mov es, ax                    
     mov ss, ax
     mov sp, 0x7BFF
 
-    call INIT_BOOT_MESSAGE
+    call print_boot_msg
 
-    call LOAD_STAGE2
+    call load_stage2
     jmp STAGE2_LOAD_SEG:STAGE2_OFFSET
     
-LOAD_STAGE2:
-    call STAGE2_MESSAGE
+load_stage2:
+    call print_stage2_msg
 
     mov ah, 0x02                    ; Read Sectors
     mov dl, 0x80                    ; Drive number
     mov dh, 0x00                    ; Head number
     mov ch, 0x00                    ; Cylinder number
     mov cl, 0x02                    ; Sector number
-    mov al, 0x01                    ; Number of sectors to read
+    mov al, 0x05                    ; Number of sectors to read
     mov bx, STAGE2_LOAD_SEG         ; Set Memory address to load Stage2
     mov es, bx                      ; Set Extra segment to the load address
     int 0x13                        ; BIOS interrupt to read from disk
-    jc DISK_ERROR                   
+    jc print_disk_error                   
     ret
 
-INIT_BOOT_MESSAGE:
+print_boot_msg:
     mov si, init_boot_message
-    call PRINT
+    call print
     ret
 
-STAGE2_MESSAGE:
+print_stage2_msg:
     mov si, stage2_message
-    call PRINT
+    call print
     ret
 
-DISK_ERROR:
+print_disk_error:
     mov si, disk_error_message
-    call PRINT           
+    call print           
     hlt                          
 
 init_boot_message  db "Initializing Booting Process..." , 0x0D, 0x0A, 0

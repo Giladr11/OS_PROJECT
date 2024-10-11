@@ -1,10 +1,10 @@
 [BITS 32]                        
 
-global _START
+global _start
 
 extern kernel_main
 
-_START:
+_start:
     call kernel_main
     jmp $
 

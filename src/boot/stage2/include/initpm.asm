@@ -3,18 +3,18 @@
 
 KERNEL_START_ADDR equ 0x100000
 
-LOAD_PM:
-    call PRINT_PM
+load_pm:
+    call print_pm_msg
 
     cli
     
     lgdt [GDT_DESC]
     
-    call INITA20
+    call initA20
 
     mov eax, cr0
     or eax, 0x1                 
-    mov cr0, eax                
+    ;mov cr0, eax                
 
     jmp CODE_SEG:PModeMain       
 
@@ -33,12 +33,12 @@ PModeMain:
     jmp CODE_SEG:KERNEL_START_ADDR
 
 [BITS 16]
-PRINT_PM:
+print_pm_msg:
     mov si, PM_message
-    call PRINT
+    call print
     ret
 
-PM_message db "Initializing Protected Mode.." , 0x0D, 0x0A, 0
+PM_message db "Initializing Protected Mode..." , 0x0D, 0x0A, 0
 
 %include "src/boot/stage2/include/gdt.asm"
 %include "src/boot/stage2/include/a20.asm"
