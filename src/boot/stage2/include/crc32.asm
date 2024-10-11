@@ -1,3 +1,4 @@
+;CRC32 Algorithem
 section .data
     crc32_table:
             dd 0x00000000, 0x04c11db7, 0x09823b6e, 0x0d4326d9
