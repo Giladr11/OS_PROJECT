@@ -79,8 +79,8 @@ The project follows a structured folder architecture for better organization:
     │   ├── boot/
     │   │   ├── stage1/
     │   │   └── stage2/
-    |   |       └──include/
-    |   |
+    |    |       └──include/
+    |    |
     │   └── kernel/
     │       └── include/
     |
