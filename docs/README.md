@@ -7,7 +7,7 @@ This project focuses on the development of a **32-bit operating system** from sc
 
 ## ⚙️ Key Features
 - 🔑 **32-bit Protected Mode**: Leverages advanced CPU features for memory protection and task management.
-- 🔄 **Checksum Verification**: Ensures kernel integrity before execution.
+- 🔄 **Checksum Verification**: Ensures kernel integrity before execution using the crc32 checksum algorithem.
 - ⚡ **Segment and GDT Setup**: Properly configures memory segments and the Global Descriptor Table.
 - 🚀 **Multi-stage Bootloader**: Efficient two-stage bootloader to initialize the system.
 - 💬 **Command-Line Interface (CLI)**: Interactive interface allowing user commands for system management.
@@ -24,7 +24,7 @@ This project focuses on the development of a **32-bit operating system** from sc
 ### **Stage 2**
 - 🛡️ **Segment Setup**: Reinitializes segment registers for consistency.
 - 📥 **Kernel Loading**: Loads the kernel into RAM for execution.
-- ✅ **Checksum Validation**: Verifies the kernel’s integrity through a checksum process.
+- ✅ **Checksum Validation**: Verifies the kernel’s integrity through a crc32 checksum process.
 - 🛠️ **GDT Setup**: Initializes the Global Descriptor Table (GDT) for protected mode.
 - 🔐 **Protected Mode Switch**: Transitions the CPU to protected mode, enabling advanced memory and security features.
 - 🚀 **Kernel Execution**: Transfers control to the kernel to begin core operating system functions.
