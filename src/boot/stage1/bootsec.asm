@@ -8,7 +8,7 @@ STAGE2_OFFSET equ 0x0000
 _START:
     xor ax, ax                
     mov ds, ax
-    mov es, ax                   
+    mov es, ax                    
     mov ss, ax
     mov sp, 0x7BFF
     
