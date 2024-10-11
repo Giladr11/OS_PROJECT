@@ -14,7 +14,7 @@ _start:
 
     call load_kernel
     
-    mov esi, input
+    mov esi, kernel_buffer
     call _start_crc32
 
     jmp load_pm
@@ -44,7 +44,7 @@ print_disk_error:
     call print             
     hlt                          
 
-input db "GILAD", 0
+kernel_buffer db "CRC32 Input", 0
 load_kernel_message db "Loading Kernel to RAM..."  , 0x0D, 0x0A, 0
 disk_error_message  db "Error Reading Disk..."     , 0x0D, 0x0A, 0
 
