@@ -33,7 +33,7 @@ load_stage2:
     int 0x13                        ; BIOS interrupt to read from disk
     
     jc print_disk_error  
-                     
+
     ret
 
 print_boot_msg:
@@ -58,5 +58,5 @@ disk_error_message db "Error Reading Disk!"             , 0x0D, 0x0A, 0
 
 %include "src/boot/print16.asm"
 
-times 510-($-$$) db 0
+times 510-($-$$) db 0x0
 dw 0xAA55
