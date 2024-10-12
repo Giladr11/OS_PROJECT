@@ -1,4 +1,4 @@
-;CRC32 Algorithem
+;CRC-32 Algorithem
 section .data
     crc32_table:  
             dd   0x00000000, 0x77073096, 0xEE0E612C, 0x990951BA
@@ -67,21 +67,28 @@ section .data
             dd   0xB40BBE37, 0xC30C8EA1, 0x5A05DF1B, 0x2D02EF8D 
 
 section .text
-    _start_crc32:
-        mov ebx, 0xFFFFFFFF              
+    global _start_crc32
 
-    calculate_crc32:
-        mov al, [esi]                    ; Load the next byte of input
-        test al, al                      ; Check for null terminator
-        jz done                          ; If zero, we're done
+_start_crc32:
+    mov ebx, 0xFFFFFFFF 
+    jmp calculate_crc32   
 
-        xor ebx, eax                     ; Update CRC with the current byte
-        and ebx, 0xFF                    ; Mask to get the lower byte for lookup
-        add ebx, [crc32_table + ebx * 4] ; Add the lookup value
+calculate_crc32:
+    test ecx, ecx                    
+    jz done
 
-        inc esi                          ; Move to the next byte
-        jmp calculate_crc32              
+    mov al, [esi]   
+    xor al, bl 
+    movzx edi, al
 
-    done:
-        not ebx               
-        ret
+    shr ebx, 0x08
+    xor ebx, [crc32_table + edi * 4]
+
+    inc esi
+    dec ecx
+
+    jmp calculate_crc32
+
+done:
+    not ebx      
+    ret

@@ -26,10 +26,14 @@ load_stage2:
     mov ch, 0x00                    ; Cylinder number
     mov cl, 0x02                    ; Sector number
     mov al, 0x05                    ; Number of sectors to read
+    
     mov bx, STAGE2_LOAD_SEG         ; Set Memory address to load Stage2
     mov es, bx                      ; Set Extra segment to the load address
+    
     int 0x13                        ; BIOS interrupt to read from disk
-    jc print_disk_error                   
+    
+    jc print_disk_error  
+                     
     ret
 
 print_boot_msg:
@@ -45,11 +49,12 @@ print_stage2_msg:
 print_disk_error:
     mov si, disk_error_message
     call print           
-    hlt                          
+
+    jmp $                         
 
 init_boot_message  db "Initializing Booting Process..." , 0x0D, 0x0A, 0
 stage2_message     db "Loading Stage2..."               , 0x0D, 0x0A, 0 
-disk_error_message db "Error Reading Disk..."           , 0x0D, 0x0A, 0
+disk_error_message db "Error Reading Disk!"             , 0x0D, 0x0A, 0
 
 %include "src/boot/print16.asm"
 
