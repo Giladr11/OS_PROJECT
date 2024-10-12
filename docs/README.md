@@ -69,7 +69,7 @@ The project follows a structured folder architecture for better organization:
     OS_PROJECT/
     ├── build/
     │   ├── boot/
-    │   │   ├── stage1/
+    │   │   ├── mbr/
     │   │   └── stage2/
     |   |
     │   └── kernel/
@@ -77,7 +77,7 @@ The project follows a structured folder architecture for better organization:
     |
     ├── src/
     │   ├── boot/
-    │   │   ├── stage1/
+    │   │   ├── mbr/
     │   │   └── stage2/
     |   |       └──include/
     |   |
@@ -94,7 +94,7 @@ The project follows a structured folder architecture for better organization:
 
 #### **build/: Contains compiled files for the bootloader, kernel and final disk image**:
 
-- *boot/stage1/: Binary file generated during the bootloader's Stage1 compilation.*
+- *boot/mbr/: Binary file generated during the bootloader's Stage1 compilation.*
 - *boot/stage2/: Binary file generated during the bootloader's Stage2 compilation.*
 - *kernel/obj/: Object files generated during the kernel compilation.*
 - *kernel/: Binary file generated at the end of kernel compilations.*
@@ -102,7 +102,7 @@ The project follows a structured folder architecture for better organization:
 
 #### **src/: Contains the source code for the bootloader and kernel**:
 
-- *boot/stage1/: Main bootsec Assembly file.*
+- *boot/mbr/: Main bootsec Assembly file.*
 - *boot/stage2/: Main loader Assembly file.*
 - *boot/stage2/include/: Assembly files for the second stage.*
 - *kernel/include/: Header files for the kernel.*
