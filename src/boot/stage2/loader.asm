@@ -1,10 +1,7 @@
 ;Main loader
 [ORG 0x8000]
 [BITS 16]
-
-KERNEL_LOAD_SEG equ 0x1000
-KERNEL_SIZE equ 0x16C8
-
+    
 _start: 
     mov ax, 0x8000
     mov ds, ax
@@ -23,7 +20,7 @@ _start:
 
     call calc_kernel_checksum
     
-    call read_kernel_checksum_sector
+    call read_kernel_checksum
 
     call compare_checksums
 
@@ -67,13 +64,8 @@ calc_kernel_checksum:
 
     ret
 
-read_kernel_checksum_sector:
-    mov esi, es
-    mov ecx, KERNEL_SIZE 
-
-    call _start_crc32
-
-    mov [kernel_checksum_result2], ebx 
+read_kernel_checksum:
+    
     
     ret
 
@@ -114,8 +106,11 @@ print_disk_error:
     jmp $                        
 
 
+KERNEL_LOAD_SEG equ 0x1000
+KERNEL_SIZE equ 0x16C8
 kernel_checksum_result1: dd 0x0
 kernel_checksum_result2: dd 0x0
+
 
 press_load_kernel   db "Press Enter to Load The Kernel..."            , 0x0D, 0x0A, 0x0D, 0x0A, 0
 load_kernel_message db "Loading The Kernel to RAM..."                 , 0x0D, 0x0A, 0x0D, 0x0A, 0
@@ -123,8 +118,10 @@ checksum_start_msg  db "Initiating Kernel Checksums Verifications..." , 0x0D, 0x
 checksums_not_equal db "Error: Kernel Checksums Do not Match!"        , 0x0D, 0x0A, 0x0D, 0x0A, 0
 disk_error_message  db "Error: Reading Disk!"                         , 0x0D, 0x0A, 0x0D, 0x0A, 0
 
+
 %include "src/boot/stage2/include/initpm.asm"
 %include "src/boot/stage2/include/crc32.asm"
 %include "src/boot/print16.asm"
+
 
 times 1536-($-$$) db 0x0

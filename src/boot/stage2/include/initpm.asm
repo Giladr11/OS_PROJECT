@@ -36,7 +36,9 @@ print_pm_msg:
     call print
     ret
 
+
 PM_message db "Transitioning into Protected Mode..." , 0x0D, 0x0A, 0x0D, 0x0A, 0
+
 
 %include "src/boot/stage2/include/gdt.asm"
 %include "src/boot/stage2/include/a20.asm"

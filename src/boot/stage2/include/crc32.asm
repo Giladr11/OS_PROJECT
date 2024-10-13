@@ -89,5 +89,5 @@ calculate_crc32:
     jmp calculate_crc32
 
 done:
-    not ebx      
+    not ebx
     ret
