@@ -70,8 +70,7 @@ section .text
     global _start_crc32
 
 _start_crc32:
-    mov ebx, 0xFFFFFFFF 
-    jmp calculate_crc32   
+    mov ebx, 0xFFFFFFFF    
 
 calculate_crc32:
     test ecx, ecx                    

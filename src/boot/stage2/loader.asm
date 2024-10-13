@@ -99,10 +99,10 @@ print_disk_error:
 kernel_checksum_result1: dd 0x0
 kernel_checksum_result2: dd 0x0
 
-checksum_start_msg  db "Initiating Kernel Checksum Verifications..." , 0x0D, 0x0A, 0 
-checksums_not_equal db "Kernel Checksums Do not Match!"              , 0x0D, 0x0A, 0
-load_kernel_message db "Loading Kernel to RAM..."                    , 0x0D, 0x0A, 0
-disk_error_message  db "Error Reading Disk!"                         , 0x0D, 0x0A, 0
+checksum_start_msg  db "Initiating Kernel Checksums Verifications..." , 0x0D, 0x0A, 0 
+checksums_not_equal db "Kernel Checksums Do not Match!"               , 0x0D, 0x0A, 0
+load_kernel_message db "Loading Kernel to RAM..."                     , 0x0D, 0x0A, 0
+disk_error_message  db "Error Reading Disk!"                          , 0x0D, 0x0A, 0
 
 %include "src/boot/stage2/include/initpm.asm"
 %include "src/boot/stage2/include/crc32.asm"

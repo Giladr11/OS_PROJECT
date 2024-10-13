@@ -25,7 +25,7 @@ A20_failed:
     
     jmp $
 
-enable_messsage db "Enabling the A20 Line..."   , 0x0D, 0x0A, 0
+enable_messsage db "Enabling A20 Line..."       , 0x0D, 0x0A, 0
 error_messsage  db "Failed to Enable A20!"      , 0x0D, 0x0A, 0
 
 %include "src/boot/print16.asm"
