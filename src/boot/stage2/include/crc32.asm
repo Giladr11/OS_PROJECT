@@ -73,17 +73,17 @@ _start_crc32:
     mov ebx, 0xFFFFFFFF    
 
 calculate_crc32:
-    test ecx, ecx                    
+    test ecx, ecx                       ; Checks if the length is 0     
     jz done
 
-    mov al, [esi]   
-    xor al, bl 
-    movzx edi, al
+    mov al, [esi]                       ; Loads the current byte from the data block into al
+    xor al, bl                          ; XOR between current byte and the crc value bl
+    movzx edi, al                       ; Zero-extends the result to a 32-bit value in edi
 
-    shr ebx, 0x08
-    xor ebx, [crc32_table + edi * 4]
+    shr ebx, 0x08                       ; Shifts the crc value right by 8 bits
+    xor ebx, [crc32_table + edi * 4]    ; looks up for corresponding entry in the crc32 table based on the value edi and XOR's it with the shifted crc value
 
-    inc esi
+    inc esi                             
     dec ecx
 
     jmp calculate_crc32
