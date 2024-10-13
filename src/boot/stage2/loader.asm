@@ -3,7 +3,7 @@
 [BITS 16]
 
 KERNEL_LOAD_SEG equ 0x1000
-KERNEL_SIZE equ 5832
+KERNEL_SIZE equ 0x16C8
 
 _start: 
     mov ax, 0x8000
@@ -13,17 +13,30 @@ _start:
 
     mov sp, 0x7FFF 
 
+    ;call print_press_key
+
+    ;call wait_for_key
+
     call load_kernel
     
     call print_start_checksum_message
 
     call calc_kernel_checksum
     
-    call read_kernel_checksum
+    call read_kernel_checksum_sector
 
     call compare_checksums
 
     jmp load_pm
+
+wait_for_key:
+    mov ah, 0x00
+    int 0x16
+
+    cmp ah, 0x1C
+    jne wait_for_key
+
+    ret
 
 load_kernel:
     call print_kernel_msg
@@ -54,14 +67,14 @@ calc_kernel_checksum:
 
     ret
 
-read_kernel_checksum:
+read_kernel_checksum_sector:
     mov esi, es
-    mov ecx, KERNEL_SIZE
+    mov ecx, KERNEL_SIZE 
 
     call _start_crc32
 
     mov [kernel_checksum_result2], ebx 
-
+    
     ret
 
 compare_checksums:
@@ -71,6 +84,11 @@ compare_checksums:
     cmp edx, ecx
     jne print_not_equal
 
+    ret
+
+print_press_key:
+    mov si, press_load_kernel
+    call print
     ret
 
 print_start_checksum_message:
@@ -99,10 +117,11 @@ print_disk_error:
 kernel_checksum_result1: dd 0x0
 kernel_checksum_result2: dd 0x0
 
-checksum_start_msg  db "Initiating Kernel Checksums Verifications..." , 0x0D, 0x0A, 0 
-checksums_not_equal db "Kernel Checksums Do not Match!"               , 0x0D, 0x0A, 0
-load_kernel_message db "Loading Kernel to RAM..."                     , 0x0D, 0x0A, 0
-disk_error_message  db "Error Reading Disk!"                          , 0x0D, 0x0A, 0
+press_load_kernel   db "Press Enter to Load The Kernel..."            , 0x0D, 0x0A, 0x0D, 0x0A, 0
+load_kernel_message db "Loading The Kernel to RAM..."                 , 0x0D, 0x0A, 0x0D, 0x0A, 0
+checksum_start_msg  db "Initiating Kernel Checksums Verifications..." , 0x0D, 0x0A, 0x0D, 0x0A, 0
+checksums_not_equal db "Error: Kernel Checksums Do not Match!"        , 0x0D, 0x0A, 0x0D, 0x0A, 0
+disk_error_message  db "Error: Reading Disk!"                         , 0x0D, 0x0A, 0x0D, 0x0A, 0
 
 %include "src/boot/stage2/include/initpm.asm"
 %include "src/boot/stage2/include/crc32.asm"

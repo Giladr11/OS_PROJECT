@@ -13,10 +13,26 @@ _start:
     mov sp, 0x7BFF
 
     call print_boot_msg
+    
+    ;call print_press_key
+
+    ;call wait_for_key
 
     call load_stage2
+
+    call print_jump_stage2
+
     jmp STAGE2_LOAD_SEG:STAGE2_OFFSET
     
+wait_for_key:
+    mov ah, 0x00
+    int 0x16
+
+    cmp ah, 0x1C
+    jne wait_for_key
+
+    ret
+
 load_stage2:
     call print_stage2_msg
 
@@ -41,8 +57,18 @@ print_boot_msg:
     call print
     ret
 
+print_press_key:
+    mov si, press_load_stage2
+    call print
+    ret
+
 print_stage2_msg:
     mov si, stage2_message
+    call print
+    ret
+
+print_jump_stage2:
+    mov si, stage2_jump
     call print
     ret
 
@@ -52,9 +78,11 @@ print_disk_error:
 
     jmp $                         
 
-init_boot_message  db "Initializing Booting Process..." , 0x0D, 0x0A, 0
-stage2_message     db "Loading Stage2..."               , 0x0D, 0x0A, 0 
-disk_error_message db "Error Reading Disk!"             , 0x0D, 0x0A, 0
+init_boot_message  db "Initializing Booting Process..." , 0x0D, 0x0A, 0x0D, 0x0A, 0
+press_load_stage2  db "Press Enter to Load Stage 2..."  , 0x0D, 0x0A, 0x0D, 0x0A, 0
+stage2_message     db "Loading Stage 2..."              , 0x0D, 0x0A, 0x0D, 0x0A, 0 
+stage2_jump        db "Executing Stage 2..."            , 0x0D, 0x0A, 0x0D, 0x0A, 0 
+disk_error_message db "Error: Reading Disk!"            , 0x0D, 0x0A, 0x0D, 0x0A, 0
 
 %include "src/boot/print16.asm"
 
