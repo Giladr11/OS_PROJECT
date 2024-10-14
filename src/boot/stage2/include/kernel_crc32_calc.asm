@@ -2,8 +2,8 @@ section .data
     kernel_filename db "build/kernel/kernel.bin", 0
     kernel_size equ 0x16C8
     hex_str db '0x00000000', 0
-    result db "Kernel's CRC-32 Checksum Result: ", 0
-    result_size equ 0x21
+    result db "Kernel's CRC-32 Checksum: ", 0
+    result_size equ 0x1A
 
 
 section .bss

@@ -5,14 +5,13 @@ export PATH="$PREFIX/bin:$PATH"
 
 make all
 
-echo "=============================================================="
+echo "=============================================="
 
-echo "Calculating Kernel Checksum ->
+echo "Calculating Kernel's Checksum ->
 "
 
-echo "./build/boot/stage2/include/crc32_calc_file.exe > build/boot/stage2/include/kernel_crc32_result.txt"
+output=$(./build/boot/stage2/include/kernel_crc32_calc.exe)
 
-echo ""
+hex_value=$(echo $output | grep -o '0x[0-9A-Fa-f]*')
 
-./build/boot/stage2/include/kernel_crc32_calc.exe > build/boot/stage2/include/kernel_crc32_result.txt
-
+echo -n $output | xxd -r -p > build/boot/stage2/checksum/kernel_crc32_result.bin
