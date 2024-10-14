@@ -20,6 +20,8 @@ _start:
 
     call calc_kernel_checksum
     
+    call open_kernel_checksum
+
     call read_kernel_checksum
 
     call compare_checksums
@@ -55,7 +57,7 @@ load_kernel:
     ret
 
 calc_kernel_checksum:
-    mov esi, es
+    mov esi, KERNEL_LOAD_SEG
     mov ecx, KERNEL_SIZE 
 
     call _start_crc32
@@ -119,9 +121,9 @@ print_disk_error:
 
 KERNEL_LOAD_SEG equ 0x1000
 KERNEL_SIZE equ 0x16C8
-kernel_checksum_result1: dd 0x0
-kernel_checksum_result2: dd 0x0
-kernel_checksum_filename db "build/boot/stage2/crc32/", 0
+kernel_checksum_result1 dd 0
+kernel_checksum_result2 dd 0
+kernel_checksum_filename db "build/boot/stage2/crc32/kernel_result.bin", 0
 
 press_load_kernel   db "Press Enter to Load The Kernel..."            , 0x0D, 0x0A, 0x0D, 0x0A, 0
 load_kernel_message db "Loading The Kernel to RAM..."                 , 0x0D, 0x0A, 0x0D, 0x0A, 0
