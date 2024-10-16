@@ -2,6 +2,13 @@
 [ORG 0x7C00]
 [BITS 16]
 
+section .data
+    STAGE2_LOAD_SEG equ 0x8000
+    STAGE2_OFFSET   equ 0x0000
+
+section .text
+    global _start
+
 _start:
     xor ax, ax                
     mov ds, ax
@@ -11,10 +18,10 @@ _start:
 
     call print_boot_msg
     
-    ;call print_press_key
+    call print_press_key
 
-    ;call wait_for_key
-
+    call wait_for_key
+    
     call load_stage2
 
     call print_jump_stage2
@@ -41,12 +48,11 @@ load_stage2:
     mov al, 0x05                    ; Number of sectors to read
     
     mov bx, STAGE2_LOAD_SEG         ; Set Memory address to load Stage2
-    mov es, bx                      ; Set Extra segment to the load address
+    mov es, bx
     
     int 0x13                        ; BIOS interrupt to read from disk
     
     jc print_disk_error  
-
     ret
 
 print_boot_msg:
@@ -75,20 +81,14 @@ print_disk_error:
 
     jmp $                         
 
-
-STAGE2_LOAD_SEG equ 0x8000
-STAGE2_OFFSET equ 0x0000
-
-
-init_boot_message  db "Initializing Booting Process..." , 0x0D, 0x0A, 0x0D, 0x0A, 0
-press_load_stage2  db "Press Enter to Load Stage 2..."  , 0x0D, 0x0A, 0x0D, 0x0A, 0
-stage2_message     db "Loading Stage 2..."              , 0x0D, 0x0A, 0x0D, 0x0A, 0 
-stage2_jump        db "Executing Stage 2..."            , 0x0D, 0x0A, 0x0D, 0x0A, 0 
-disk_error_message db "Error: Reading Disk!"            , 0x0D, 0x0A, 0x0D, 0x0A, 0
+init_boot_message  db "Initializing Booting Process..."   , 0x0D, 0x0A, 0x0D, 0x0A, 0
+press_load_stage2  db "Press 'Enter' to Load Stage 2..."  , 0x0D, 0x0A, 0x0D, 0x0A, 0
+stage2_message     db "Loading Stage 2..."                , 0x0D, 0x0A, 0x0D, 0x0A, 0 
+stage2_jump        db "Executing Stage 2..."              , 0x0D, 0x0A, 0x0D, 0x0A, 0 
+disk_error_message db "Error: Reading Disk!"              , 0x0D, 0x0A, 0x0D, 0x0A, 0
 
 
 %include "src/boot/print16.asm"
-
 
 times 510-($-$$) db 0x0
 dw 0xAA55

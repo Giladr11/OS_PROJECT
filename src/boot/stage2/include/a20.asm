@@ -1,4 +1,4 @@
-;Enabling The A20 Line
+;Enabling A20 Line
 [BITS 16]
 
 initA20:
@@ -33,9 +33,9 @@ A20_failed:
     jmp $
 
 
-enable_messsage db "Enabling The A20 Line..."                , 0x0D, 0x0A, 0x0D, 0x0A, 0
-success_message db "Successfully Enabled The A20 Line!"      , 0x0D, 0x0A, 0x0D, 0x0A, 0
-error_messsage  db "Error: Failed to Enable The A20 Line!"   , 0x0D, 0x0A, 0x0D, 0x0A, 0
+enable_messsage db "Enabling A20 Line..."                , 0x0D, 0x0A, 0x0D, 0x0A, 0
+success_message db "Successfully Enabled A20 Line..."    , 0x0D, 0x0A, 0x0D, 0x0A, 0
+error_messsage  db "Error: Failed to Enable A20 Line!"   , 0x0D, 0x0A, 0x0D, 0x0A, 0
 
 
 %include "src/boot/print16.asm"

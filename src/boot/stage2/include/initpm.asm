@@ -3,13 +3,15 @@
 
 KERNEL_START_ADDR equ 0x100000
 
-load_pm:
-    call print_pm_msg
-    
+load_pm:    
     call initA20
 
-    lgdt [GDT_DESC]
+    call print_pm_msg
 
+    call print_kernel_exe_msg
+
+    lgdt [GDT_DESC]
+    
     mov eax, cr0
     or eax, 0x01                 
     ;mov cr0, eax                
@@ -32,13 +34,17 @@ PModeMain:
 
 [BITS 16]
 print_pm_msg:
-    mov si, PM_message
+    mov si, protected_mode_message
     call print
     ret
 
+print_kernel_exe_msg:
+    mov si, kernel_execution_message
+    call print
+    ret
 
-PM_message db "Transitioning into Protected Mode..." , 0x0D, 0x0A, 0x0D, 0x0A, 0
-
+protected_mode_message   db "Transitioning into Protected Mode..." , 0x0D, 0x0A, 0x0D, 0x0A, 0
+kernel_execution_message db "Initiating Kernel Execution..."       , 0x0D, 0x0A, 0x0D, 0x0A, 0
 
 %include "src/boot/stage2/include/gdt.asm"
 %include "src/boot/stage2/include/a20.asm"

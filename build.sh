@@ -10,6 +10,6 @@ echo "=============================================="
 echo "Calculating Kernel's Checksum ->
 "
 
-output=$(./build/boot/stage2/include/kernel_crc32_calc.exe)
+output=$(./build/boot/stage2/include/preboot_crc32_calc.exe)
 
-echo -n $output | xxd -r -p > build/boot/stage2/crc32/kernel_result.bin
+echo -n $output | xxd -r -p > build/boot/stage2/crc32/preboot_crc32_result.bin

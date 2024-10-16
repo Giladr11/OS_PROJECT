@@ -26,10 +26,11 @@ BOOTSEC_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(MBR_DIR)/bootsec.asm
 LOADER_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/loader.asm
 ###INCLUDE
 CRC32_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/crc32.asm
-KERNEL_CRC32_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/kernel_crc32_calc.asm
+PREBOOT_CRC32_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/preboot_crc32_calc.asm
 GDT_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/gdt.asm
 A20_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/a20.asm
 INITPM_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/initpm.asm
+CHECKSUMS_VERIFIER_SRC = $(SRC_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/crc32_verifier.asm
 ## Kernel Source Files:
 KERNEL_ASM_SRC = $(SRC_DIR)/$(KERNEL_DIR)/kernel.asm
 SCRIPT_LINKER = $(SRC_DIR)/$(KERNEL_DIR)/linker.ld
@@ -49,8 +50,8 @@ COUNT = 1
 BOOTSEC_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(MBR_DIR)/bootsec.bin
 ##STAGE2
 LOADER_BIN = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/loader.bin
-KERNEL_CRC32_OBJ = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/kernel_crc32_calc.o
-KERNEL_CRC32_EXE = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/kernel_crc32_calc.exe
+PREBOOT_CRC32_OBJ = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/preboot_crc32_calc.o
+PREBOOT_CRC32_EXE = $(BUILD_DIR)/$(BOOT_DIR)/$(STAGE2_DIR)/$(INCLUDE_DIR)/preboot_crc32_calc.exe
 ## Kernel OBJ Files
 MAINKERNEL_C_OBJ = $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/kernel.o
 KERNEL_ASM_OBJ = $(BUILD_DIR)/$(KERNEL_DIR)/$(OBJ_DIR)/kernel.asm.o
@@ -69,7 +70,7 @@ CLEAN_BUILD3 = *.o
 all: $(DISK_IMG)
 
 # Compile Disk Image
-$(DISK_IMG): $(BOOTSEC_BIN) $(LOADER_BIN) $(KERNEL_BIN) $(KERNEL_CRC32_EXE)
+$(DISK_IMG): $(BOOTSEC_BIN) $(LOADER_BIN) $(KERNEL_BIN) $(PREBOOT_CRC32_EXE)
 	@echo "Building $(DISK_IMG)..."
 	dd if=$(BOOTSEC_BIN) of=$(DISK_IMG) bs=$(SECTOR_SIZE) count=$(COUNT) conv=$(CONV)
 
@@ -82,23 +83,31 @@ $(DISK_IMG): $(BOOTSEC_BIN) $(LOADER_BIN) $(KERNEL_BIN) $(KERNEL_CRC32_EXE)
 	$(eval KERNEL_COUNT := $(shell echo $$((($(KERNEL_SIZE) + $(SECTOR_SIZE) - 1) / $(SECTOR_SIZE)))))
 	dd if=$(KERNEL_BIN) of=$(DISK_IMG) bs=$(SECTOR_SIZE) count=$(KERNEL_COUNT) seek=$(KERNEL_SEEK) conv=$(CONV)
 
+
+#BOOT=COMPILATION===============================================================
+
+
 # Compile bootsec.bin
 $(BOOTSEC_BIN): $(BOOTSEC_SRC) $(PRINT16_SRC)
 	@echo "Compiling $(BOOTSEC_BIN)..."
 	$(NASM_CMD) $(NASM_FLAGS) $(BOOTSEC_SRC) -o $(BOOTSEC_BIN)
 
 # Compile loader.bin
-$(LOADER_BIN): $(LOADER_SRC) $(GDT_SRC) $(A20_SRC) $(INITPM_SRC) $(CRC32_SRC) $(PRINT16_SRC)
+$(LOADER_BIN): $(LOADER_SRC) $(GDT_SRC) $(A20_SRC) $(INITPM_SRC) $(CRC32_SRC) $(CHECKSUMS_VERIFIER_SRC) $(PRINT16_SRC)
 	@echo "Compiling $(LOADER_BIN)..."
 	$(NASM_CMD) $(NASM_FLAGS) $(LOADER_SRC) -o $(LOADER_BIN)
 
 # Compiling kernel_crc32_calc.exe
-$(KERNEL_CRC32_EXE): $(KERNEL_CRC32_OBJ)
-	ld -m elf_i386 -o $(KERNEL_CRC32_EXE) $(KERNEL_CRC32_OBJ)
+$(PREBOOT_CRC32_EXE): $(PREBOOT_CRC32_OBJ)
+	ld -m elf_i386 -o $(PREBOOT_CRC32_EXE) $(PREBOOT_CRC32_OBJ)
 
 # Compiling kernel_crc32_calc.o
-$(KERNEL_CRC32_OBJ): $(KERNEL_CRC32_SRC)
-	$(NASM_CMD) -f elf32 -g $(KERNEL_CRC32_SRC) -o $(KERNEL_CRC32_OBJ)
+$(PREBOOT_CRC32_OBJ): $(PREBOOT_CRC32_SRC)
+	$(NASM_CMD) -f elf32 -g $(PREBOOT_CRC32_SRC) -o $(PREBOOT_CRC32_OBJ)
+
+
+#KERNEL=COMPILATION===============================================================
+
 
 # Compiling Final kernel.bin
 $(KERNEL_BIN): $(SCRIPT_LINKER) $(LINKED_KERNEL_OBJ)
