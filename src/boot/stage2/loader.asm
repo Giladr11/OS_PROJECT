@@ -110,9 +110,8 @@ checksum_start_msg  db "[+] Initiating Kernel CRC-32 Checksums Verification..." 
 disk_error_message  db "[-] Error: Reading Disk!"                                , 0x0D, 0x0A, 0x0D, 0x0A, 0
 
 
-%include "src/boot/stage2/include/initpm.asm"
 %include "src/boot/stage2/include/crc32_verifier.asm"
-
+%include "src/boot/stage2/include/initpm.asm"
 %include "src/boot/print16.asm"
 
 times 1536-($-$$) db 0x0
