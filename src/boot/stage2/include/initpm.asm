@@ -8,11 +8,8 @@ load_pm:
 
     call print_pm_msg
 
-<<<<<<< HEAD
     call print_kernel_exe_msg
 
-=======
->>>>>>> 1a7b0b0d65515aef5518f50f6043b4ce9b6f6ee2
     lgdt [GDT_DESC]
     
     mov eax, cr0
@@ -46,14 +43,9 @@ print_kernel_exe_msg:
     call print
     ret
 
-<<<<<<< HEAD
 
 protected_mode_message   db "[+] Transitioning into Protected Mode..." , 0x0D, 0x0A, 0x0D, 0x0A, 0
 kernel_execution_message db "[+] Initiating Kernel Execution..."       , 0x0D, 0x0A, 0x0D, 0x0A, 0
-=======
-PM_message db "Transitioning into Protected Mode and Executing the kernel..." , 0x0D, 0x0A, 0x0D, 0x0A, 0
->>>>>>> 1a7b0b0d65515aef5518f50f6043b4ce9b6f6ee2
-
 
 %include "src/boot/stage2/include/gdt.asm"
 %include "src/boot/stage2/include/a20.asm"

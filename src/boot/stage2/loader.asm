@@ -30,8 +30,6 @@ _start:
     
     call load_kernel
 
-    call load_kernel
-
     jmp load_pm
 
 wait_for_key:
@@ -52,12 +50,8 @@ read_kernel:
     mov ch, 0x00                    
     mov cl, 0x07                    
     mov al, 0x0C                   
-    
-<<<<<<< HEAD
+                                 
     mov bx, read_kernel_buffer                             
-=======
-    mov bx, kernel_buffer                             
->>>>>>> 1a7b0b0d65515aef5518f50f6043b4ce9b6f6ee2
 
     int 0x13                        
     
@@ -109,7 +103,6 @@ print_disk_error:
     jmp $                        
 
 
-<<<<<<< HEAD
 press_load_kernel   db "Press 'Enter' to Advance System Initialization..."       , 0x0D, 0x0A, 0x0D, 0x0A, 0
 read_kernel_message db "[+] Accessing Kernel on disk for integrity check..."     , 0x0D, 0x0A, 0x0D, 0x0A, 0
 load_kernel_message db "[+] Loading Kernel to RAM..."                            , 0x0D, 0x0A, 0x0D, 0x0A, 0
@@ -119,17 +112,7 @@ disk_error_message  db "[-] Error: Reading Disk!"                               
 
 %include "src/boot/stage2/include/initpm.asm"
 %include "src/boot/stage2/include/crc32_verifier.asm"
-=======
-press_load_kernel   db "Press Enter to Initiate Kernel/Segments Operations..."  , 0x0D, 0x0A, 0x0D, 0x0A, 0
-read_kernel_message db "Reading kernel From Disk for Checksums Verifications"   , 0x0D, 0x0A, 0x0D, 0x0A, 0
-load_kernel_message db "Loading The Kernel to RAM..."                           , 0x0D, 0x0A, 0x0D, 0x0A, 0
-checksum_start_msg  db "Initiating Kernel Checksums Verifications..."           , 0x0D, 0x0A, 0x0D, 0x0A, 0
-disk_error_message  db "Error: Reading Disk!"                                   , 0x0D, 0x0A, 0x0D, 0x0A, 0
 
-
-%include "src/boot/stage2/include/initpm.asm"
-%include "src/boot/stage2/include/handleChecksums.asm"
->>>>>>> 1a7b0b0d65515aef5518f50f6043b4ce9b6f6ee2
 %include "src/boot/print16.asm"
 
 times 1536-($-$$) db 0x0

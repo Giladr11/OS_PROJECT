@@ -1,4 +1,4 @@
-;Pre-Boot Checksum Calculation
+;Pre-Boot CRC-32 Checksum Calculation
 
 section .text
     global _start
