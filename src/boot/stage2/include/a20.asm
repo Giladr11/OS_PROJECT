@@ -33,9 +33,15 @@ A20_failed:
     jmp $
 
 
+<<<<<<< HEAD
 enable_messsage db "[+] Enabling A20 Line..."                , 0x0D, 0x0A, 0x0D, 0x0A, 0
 success_message db "[+] Successfully Enabled A20 Line..."    , 0x0D, 0x0A, 0x0D, 0x0A, 0
 error_messsage  db "[-] Error: Failed to Enable A20 Line!"   , 0x0D, 0x0A, 0x0D, 0x0A, 0
+=======
+enable_messsage db "Enabling The A20 Line..."                , 0x0D, 0x0A, 0x0D, 0x0A, 0
+success_message db "Successfully Enabled The A20 Line..."      , 0x0D, 0x0A, 0x0D, 0x0A, 0
+error_messsage  db "Error: Failed to Enable The A20 Line!"   , 0x0D, 0x0A, 0x0D, 0x0A, 0
+>>>>>>> 1a7b0b0d65515aef5518f50f6043b4ce9b6f6ee2
 
 
 %include "src/boot/print16.asm"
