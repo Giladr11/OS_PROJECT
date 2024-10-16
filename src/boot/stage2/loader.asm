@@ -51,7 +51,7 @@ read_kernel:
     mov cl, 0x07                    
     mov al, 0x0C                   
     
-    mov bx, kernel_buffer                             
+    mov bx, read_kernel_buffer                             
 
     int 0x13                        
     
@@ -103,11 +103,11 @@ print_disk_error:
     jmp $                        
 
 
-press_load_kernel   db "Press 'Enter' to Advance System Initialization..."   , 0x0D, 0x0A, 0x0D, 0x0A, 0
-read_kernel_message db "Accessing Kernel on disk for integrity check..."     , 0x0D, 0x0A, 0x0D, 0x0A, 0
-load_kernel_message db "Loading Kernel to RAM..."                            , 0x0D, 0x0A, 0x0D, 0x0A, 0
-checksum_start_msg  db "Initiating Kernel CRC-32 Checksums Verification..."  , 0x0D, 0x0A, 0x0D, 0x0A, 0
-disk_error_message  db "Error: Reading Disk!"                                , 0x0D, 0x0A, 0x0D, 0x0A, 0
+press_load_kernel   db "Press 'Enter' to Advance System Initialization..."       , 0x0D, 0x0A, 0x0D, 0x0A, 0
+read_kernel_message db "[+] Accessing Kernel on disk for integrity check..."     , 0x0D, 0x0A, 0x0D, 0x0A, 0
+load_kernel_message db "[+] Loading Kernel to RAM..."                            , 0x0D, 0x0A, 0x0D, 0x0A, 0
+checksum_start_msg  db "[+] Initiating Kernel CRC-32 Checksums Verification..."  , 0x0D, 0x0A, 0x0D, 0x0A, 0
+disk_error_message  db "[-] Error: Reading Disk!"                                , 0x0D, 0x0A, 0x0D, 0x0A, 0
 
 
 %include "src/boot/stage2/include/initpm.asm"

@@ -1,6 +1,10 @@
 ;Pre-Boot Checksum Calculation
 
-ret
+section .text
+    global _start
+
+_start:
+    ret
 
 
 %include "src/boot/stage2/include/crc32.asm"

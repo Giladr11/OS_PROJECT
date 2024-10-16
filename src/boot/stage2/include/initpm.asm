@@ -1,4 +1,4 @@
-;Initializing Protected Mode
+;Protected Mode Initialization
 [BITS 16]
 
 KERNEL_START_ADDR equ 0x100000
@@ -43,8 +43,10 @@ print_kernel_exe_msg:
     call print
     ret
 
-protected_mode_message   db "Transitioning into Protected Mode..." , 0x0D, 0x0A, 0x0D, 0x0A, 0
-kernel_execution_message db "Initiating Kernel Execution..."       , 0x0D, 0x0A, 0x0D, 0x0A, 0
+
+protected_mode_message   db "[+] Transitioning into Protected Mode..." , 0x0D, 0x0A, 0x0D, 0x0A, 0
+kernel_execution_message db "[+] Initiating Kernel Execution..."       , 0x0D, 0x0A, 0x0D, 0x0A, 0
+
 
 %include "src/boot/stage2/include/gdt.asm"
 %include "src/boot/stage2/include/a20.asm"
