@@ -34,7 +34,7 @@ A20_failed:
 
 
 enable_messsage db "Enabling The A20 Line..."                , 0x0D, 0x0A, 0x0D, 0x0A, 0
-success_message db "Successfully Enabled The A20 Line!"      , 0x0D, 0x0A, 0x0D, 0x0A, 0
+success_message db "Successfully Enabled The A20 Line..."      , 0x0D, 0x0A, 0x0D, 0x0A, 0
 error_messsage  db "Error: Failed to Enable The A20 Line!"   , 0x0D, 0x0A, 0x0D, 0x0A, 0
 
 
